@@ -35,9 +35,12 @@
   },
   "workspaces": [
     "apps/**",
+    "storefront",
     "!apps/backend/.medusa/**"
   ],
   "overrides": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "eslint": {
       "ajv": "^6.12.4"
     },
