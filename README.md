@@ -38,6 +38,21 @@
   </a>
 </p>
 
+## FlashSRE: chạy local
+
+```bash
+docker run -d --name flashsre-pg -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=medusa -p 55432:5432 postgres:16
+npm install
+cp apps/backend/.env.template apps/backend/.env      # đã trỏ DB và admin về localhost
+cd apps/backend
+npx medusa db:migrate
+npx medusa user -e admin@flashsre.dev -p <mật-khẩu-tự-chọn>
+npx medusa develop                                   # admin: http://localhost:9000/app
+```
+
+- Storefront Next.js nằm ở `storefront/` (cài riêng: `cd storefront && npm install && npm run dev`).
+- Agent, benchmark, kịch bản sự cố và trang FlashSRE Ops: xem [incidents/README.md](incidents/README.md).
+
 # Medusa DTC Starter
 
 A production-ready monorepo starter for direct-to-consumer ecommerce stores powered by Medusa and Next.js. Includes a fully featured storefront with product browsing, cart, checkout, customer accounts, and order management.
