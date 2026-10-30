@@ -1,0 +1,215 @@
+{
+  "schema": "marketplace/v1",
+  "market": {
+    "currency": "vnd",
+    "country": "vn"
+  },
+  "teams": {
+    "merchandising": "Giá, SKU, biến thể, gán ngành hàng",
+    "seller_ops": "Voucher shop, Brand Day, hồ sơ shop (loại shop, chương trình tham gia)",
+    "marketing": "Voucher sàn, phân khúc, chương trình freeship",
+    "logistics": "Provider, phí ship, vùng giao",
+    "finance": "Ngân sách sponsor, trần trợ giá mỗi đơn",
+    "category": "Ưu đãi riêng của ngành hàng (Tuần lễ Gia dụng)"
+  },
+  "taxonomy": {
+    "categories": {
+      "gia-dung": {
+        "handle": "fs-mk-gia-dung",
+        "owner": "merchandising"
+      },
+      "noi-chien": {
+        "handle": "fs-mk-noi-chien",
+        "owner": "merchandising"
+      },
+      "may-hut-bui": {
+        "handle": "fs-mk-may-hut-bui",
+        "owner": "merchandising"
+      },
+      "noi-com": {
+        "handle": "fs-mk-noi-com",
+        "owner": "merchandising"
+      },
+      "dien-tu": {
+        "handle": "fs-mk-dien-tu",
+        "owner": "merchandising"
+      },
+      "tai-nghe": {
+        "handle": "fs-mk-tai-nghe",
+        "owner": "merchandising"
+      },
+      "sac-du-phong": {
+        "handle": "fs-mk-sac-du-phong",
+        "owner": "merchandising"
+      },
+      "dong-ho": {
+        "handle": "fs-mk-dong-ho",
+        "owner": "merchandising"
+      },
+      "my-pham": {
+        "handle": "fs-mk-my-pham",
+        "owner": "merchandising"
+      },
+      "cham-soc-da": {
+        "handle": "fs-mk-cham-soc-da",
+        "owner": "merchandising"
+      },
+      "trang-diem": {
+        "handle": "fs-mk-trang-diem",
+        "owner": "merchandising"
+      },
+      "me-be": {
+        "handle": "fs-mk-me-be",
+        "owner": "merchandising"
+      },
+      "ta-bim": {
+        "handle": "fs-mk-ta-bim",
+        "owner": "merchandising"
+      },
+      "sua": {
+        "handle": "fs-mk-sua",
+        "owner": "merchandising"
+      }
+    },
+    "shops": {
+      "airchef": {
+        "handle": "fs-shop-airchef",
+        "type": "mall",
+        "owner": "seller_ops"
+      },
+      "homelux": {
+        "handle": "fs-shop-homelux",
+        "type": "preferred",
+        "owner": "seller_ops"
+      },
+      "techzone": {
+        "handle": "fs-shop-techzone",
+        "type": "mall",
+        "owner": "seller_ops"
+      },
+      "pinpro": {
+        "handle": "fs-shop-pinpro",
+        "type": "normal",
+        "owner": "seller_ops"
+      },
+      "glow": {
+        "handle": "fs-shop-glow",
+        "type": "mall",
+        "owner": "seller_ops"
+      },
+      "sonxinh": {
+        "handle": "fs-shop-sonxinh",
+        "type": "normal",
+        "owner": "seller_ops"
+      },
+      "sunhouse": {
+        "handle": "fs-shop-sunhouse",
+        "type": "mall",
+        "owner": "seller_ops"
+      },
+      "watchx": {
+        "handle": "fs-shop-watchx",
+        "type": "preferred_plus",
+        "owner": "seller_ops"
+      },
+      "babycare": {
+        "handle": "fs-shop-babycare",
+        "type": "mall",
+        "owner": "seller_ops"
+      },
+      "momshop": {
+        "handle": "fs-shop-momshop",
+        "type": "preferred",
+        "owner": "seller_ops"
+      }
+    },
+    "shop_types": {
+      "mall": "fs-shop-mall",
+      "preferred_plus": "fs-shop-preferred-plus",
+      "preferred": "fs-shop-preferred",
+      "normal": "fs-shop-normal"
+    },
+    "programs": {
+      "freeship_xtra": {
+        "tag": "fs-freeship-xtra",
+        "shops": [
+          "airchef",
+          "homelux",
+          "techzone",
+          "glow",
+          "sunhouse",
+          "watchx",
+          "babycare"
+        ]
+      }
+    },
+    "segments": {
+      "NEW": "FS-MK Khách mới"
+    },
+    "assortment": {
+      "FS-MK-AIRCHEF6-DEN": "noi-chien",
+      "FS-MK-AIRCHEF6-TRANG": "noi-chien",
+      "FS-MK-AIRCHEF-MINI": "noi-chien",
+      "FS-MK-HOMELUX-V8": "may-hut-bui",
+      "FS-MK-TZ-BUDS": "tai-nghe",
+      "FS-MK-PINPRO-20K": "sac-du-phong",
+      "FS-MK-GLOW-SERUM": "cham-soc-da",
+      "FS-MK-SONXINH": "trang-diem",
+      "FS-MK-SUNHOUSE-NC": "noi-com",
+      "FS-MK-WATCHX-S3": "dong-ho",
+      "FS-MK-BABYCARE-XL": "ta-bim",
+      "FS-MK-MOMSHOP-GOLD": "sua"
+    }
+  },
+  "contract_id": "CT-GIADUNG-WEEK",
+  "owner": "category",
+  "title": "Tuần lễ Gia dụng: -8% ngành Gia dụng cho shop Yêu thích và Thường (Mall đã có Brand Day riêng)",
+  "flash": [],
+  "promotions": [
+    {
+      "code": "FS-MK-GDW8",
+      "owner": "category",
+      "sponsor": "category",
+      "type": "percentage",
+      "value": 8,
+      "scope": {
+        "categories": [
+          "gia-dung"
+        ],
+        "shop_types": [
+          "preferred",
+          "normal"
+        ]
+      },
+      "segments": "ALL",
+      "automatic": true
+    }
+  ],
+  "stacking": {
+    "allowed_codes": [
+      "FS-MK-GDW8",
+      "FS-MK-SAN10",
+      "FS-MK-NEWBIE50K",
+      "FS-MK-AIRCHEF100K",
+      "FS-MK-GLOW30K",
+      "FS-MK-BABY40K",
+      "FS-MK-FREESHIP"
+    ],
+    "max_item_discount_per_order": 400000
+  },
+  "budgets": [
+    {
+      "campaign_identifier": "fs-mk-gdweek",
+      "owner": "finance",
+      "min_limit": 20000000
+    }
+  ],
+  "carts": {
+    "mixed": [
+      [
+        "FS-MK-HOMELUX-V8",
+        "FS-MK-SUNHOUSE-NC"
+      ]
+    ]
+  }
+}

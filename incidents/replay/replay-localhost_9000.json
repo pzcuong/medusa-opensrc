@@ -1,0 +1,258 @@
+[
+  {
+    "skus": [
+      "FS-MK-WATCHX-S3"
+    ],
+    "segment": "REGULAR",
+    "why": "thiếu trần 150.000đ",
+    "cart_id": "cart_01M5TX78T183C7G56J764XVZ0Q",
+    "customer": null,
+    "real_total": 1701000,
+    "simulated_pays": 1701000,
+    "expected_pays": 1740000,
+    "match": true,
+    "per_code": [
+      {
+        "code": "FS-MK-SAN10",
+        "real": 189000,
+        "simulated": 189000,
+        "expected_by_contract": 150000
+      }
+    ],
+    "other_contracts_pays": {
+      "CT-BRANDDAY-AIRCHEF": 1701000,
+      "CT-GIADUNG-WEEK": 1701000
+    },
+    "cross_contract_match": true
+  },
+  {
+    "skus": [
+      "FS-MK-WATCHX-S3"
+    ],
+    "segment": "NEW",
+    "why": "thiếu trần + thứ tự áp",
+    "cart_id": "cart_01M5TX7C19P4D0J4C7BSKHVJ0F",
+    "customer": null,
+    "real_total": 1656000,
+    "simulated_pays": 1656000,
+    "expected_pays": 1690000,
+    "match": true,
+    "per_code": [
+      {
+        "code": "FS-MK-NEWBIE50K",
+        "real": 50000,
+        "simulated": 50000,
+        "expected_by_contract": 50000
+      },
+      {
+        "code": "FS-MK-SAN10",
+        "real": 184000,
+        "simulated": 184000,
+        "expected_by_contract": 150000
+      }
+    ],
+    "other_contracts_pays": {
+      "CT-BRANDDAY-AIRCHEF": 1656000,
+      "CT-GIADUNG-WEEK": 1656000
+    },
+    "cross_contract_match": true
+  },
+  {
+    "skus": [
+      "FS-MK-TZ-BUDS"
+    ],
+    "segment": "NEW",
+    "why": "thứ tự áp (giảm cố định trước %)",
+    "cart_id": "cart_01M5TX7FD8PKK3FQDZXSYNQRKD",
+    "customer": null,
+    "real_total": 846000,
+    "simulated_pays": 846000,
+    "expected_pays": 841000,
+    "match": true,
+    "per_code": [
+      {
+        "code": "FS-MK-NEWBIE50K",
+        "real": 50000,
+        "simulated": 50000,
+        "expected_by_contract": 50000
+      },
+      {
+        "code": "FS-MK-SAN10",
+        "real": 94000,
+        "simulated": 94000,
+        "expected_by_contract": 99000
+      }
+    ],
+    "other_contracts_pays": {
+      "CT-BRANDDAY-AIRCHEF": 846000,
+      "CT-GIADUNG-WEEK": 846000
+    },
+    "cross_contract_match": true
+  },
+  {
+    "skus": [
+      "FS-MK-AIRCHEF6-DEN"
+    ],
+    "segment": "REGULAR",
+    "why": "Brand Day tính trên giá flash 11.11, không phải giá niêm yết",
+    "cart_id": "cart_01M5TX7JR2F2W6H6SCTMRDCE60",
+    "customer": null,
+    "real_total": 1216800,
+    "simulated_pays": 1216800,
+    "expected_pays": 1202000,
+    "match": true,
+    "per_code": [
+      {
+        "code": "FS-MK-AIRCHEF100K",
+        "real": 100000,
+        "simulated": 100000,
+        "expected_by_contract": 100000
+      },
+      {
+        "code": "FS-MK-BD-AIRCHEF20",
+        "real": 338000,
+        "simulated": 338000,
+        "expected_by_contract": null
+      },
+      {
+        "code": "FS-MK-SAN10",
+        "real": 135200,
+        "simulated": 135200,
+        "expected_by_contract": 150000
+      }
+    ],
+    "other_contracts_pays": {
+      "CT-BRANDDAY-AIRCHEF": 1216800,
+      "CT-GIADUNG-WEEK": 1216800
+    },
+    "cross_contract_match": true
+  },
+  {
+    "skus": [
+      "FS-MK-HOMELUX-V8"
+    ],
+    "segment": "REGULAR",
+    "why": "SAN10 vượt trần 150.000đ khi cộng với Tuần lễ Gia dụng",
+    "cart_id": "cart_01M5TX7NWH43M9B93Q6B5HK3YR",
+    "customer": null,
+    "real_total": 2227320,
+    "simulated_pays": 2227320,
+    "expected_pays": 2346320,
+    "match": true,
+    "per_code": [
+      {
+        "code": "FS-MK-GDW8",
+        "real": 193680,
+        "simulated": 193680,
+        "expected_by_contract": null
+      },
+      {
+        "code": "FS-MK-SAN10",
+        "real": 269000,
+        "simulated": 269000,
+        "expected_by_contract": 150000
+      }
+    ],
+    "other_contracts_pays": {
+      "CT-BRANDDAY-AIRCHEF": 2227320,
+      "CT-GIADUNG-WEEK": 2227320
+    },
+    "cross_contract_match": true
+  },
+  {
+    "skus": [
+      "FS-MK-HOMELUX-V8",
+      "FS-MK-AIRCHEF-MINI"
+    ],
+    "segment": "REGULAR",
+    "why": "vượt trần 300.000đ/đơn, cộng dồn 3 campaign",
+    "cart_id": "cart_01M5TX7S15BY7S89Y326MN007Z",
+    "customer": null,
+    "real_total": 3084120,
+    "simulated_pays": 3084120,
+    "expected_pays": 3298320,
+    "match": true,
+    "per_code": [
+      {
+        "code": "FS-MK-AIRCHEF100K",
+        "real": 100000,
+        "simulated": 100000,
+        "expected_by_contract": 100000
+      },
+      {
+        "code": "FS-MK-BD-AIRCHEF20",
+        "real": 238000,
+        "simulated": 238000,
+        "expected_by_contract": null
+      },
+      {
+        "code": "FS-MK-GDW8",
+        "real": 193680,
+        "simulated": 193680,
+        "expected_by_contract": null
+      },
+      {
+        "code": "FS-MK-SAN10",
+        "real": 364200,
+        "simulated": 364200,
+        "expected_by_contract": 150000
+      }
+    ],
+    "other_contracts_pays": {
+      "CT-BRANDDAY-AIRCHEF": null,
+      "CT-GIADUNG-WEEK": null
+    },
+    "cross_contract_match": true
+  },
+  {
+    "skus": [
+      "FS-MK-HOMELUX-V8",
+      "FS-MK-AIRCHEF-MINI"
+    ],
+    "segment": "NEW",
+    "why": "vượt trần 300.000đ/đơn, cộng dồn 3 campaign",
+    "cart_id": "cart_01M5TX7W3FQESJPJ6T1RVXCS0C",
+    "customer": null,
+    "real_total": 3044376.18556701,
+    "simulated_pays": 3044376,
+    "expected_pays": 3253883,
+    "match": true,
+    "per_code": [
+      {
+        "code": "FS-MK-AIRCHEF100K",
+        "real": 100000,
+        "simulated": 100000,
+        "expected_by_contract": 100000
+      },
+      {
+        "code": "FS-MK-BD-AIRCHEF20",
+        "real": 234933,
+        "simulated": 234933,
+        "expected_by_contract": null
+      },
+      {
+        "code": "FS-MK-GDW8",
+        "real": 191184,
+        "simulated": 191184,
+        "expected_by_contract": null
+      },
+      {
+        "code": "FS-MK-NEWBIE50K",
+        "real": 50000,
+        "simulated": 50000,
+        "expected_by_contract": 50000
+      },
+      {
+        "code": "FS-MK-SAN10",
+        "real": 359507,
+        "simulated": 359507,
+        "expected_by_contract": 150000
+      }
+    ],
+    "other_contracts_pays": {
+      "CT-BRANDDAY-AIRCHEF": null,
+      "CT-GIADUNG-WEEK": null
+    },
+    "cross_contract_match": true
+  }
+]

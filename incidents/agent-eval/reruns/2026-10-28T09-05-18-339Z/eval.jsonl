@@ -1,0 +1,2 @@
+{"sample_id":"FLASH_DEARER_THAN_SHOP_PROMO-01","family":"FLASH_DEARER_THAN_SHOP_PROMO","truth":"CROSS_TEAM_CONFLICT","actor":"merchandising","verdicts":["CROSS_TEAM_CONTRADICTION"],"business_ok":true,"verdict_ok":true,"fix_ok":true,"root_hit":true,"incidents":1,"error":null}
+{"sample_id":"FLASH_DEARER_THAN_SHOP_PROMO-02","family":"FLASH_DEARER_THAN_SHOP_PROMO","truth":"CROSS_TEAM_CONFLICT","actor":"merchandising","verdicts":["CROSS_TEAM_CONTRADICTION"],"business_ok":true,"verdict_ok":true,"fix_ok":true,"root_hit":true,"incidents":1,"error":null}

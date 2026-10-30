@@ -1,0 +1,5 @@
+sample_id,family,actor_team,truth_kind,detected,attributed_actor_team,new_findings,witness_match,error
+FLASH_DEARER_THAN_SHOP_PROMO-01,FLASH_DEARER_THAN_SHOP_PROMO,merchandising,CROSS_TEAM_CONFLICT,true,true,1,true,false
+FLASH_DEARER_THAN_SHOP_PROMO-02,FLASH_DEARER_THAN_SHOP_PROMO,merchandising,CROSS_TEAM_CONFLICT,true,true,1,true,false
+FLASH_DEARER_THAN_SHOP_PROMO-03,FLASH_DEARER_THAN_SHOP_PROMO,merchandising,NO_OP,true,true,0,true,false
+FLASH_DEARER_THAN_SHOP_PROMO-04,FLASH_DEARER_THAN_SHOP_PROMO,merchandising,NO_OP,true,true,0,true,false

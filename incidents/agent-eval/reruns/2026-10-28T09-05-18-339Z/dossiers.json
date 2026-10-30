@@ -1,0 +1,2256 @@
+[
+  {
+    "contract_id": "CT-1111-MARKETPLACE",
+    "finding_key": "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h",
+    "title": "Trong giờ flash khách trả nhiều hơn ngoài giờ flash trên 20 giỏ (FS-MK-AIRCHEF6-TRANG, FS-MK-AIRCHEF6-DEN): giá flash thấp hơn nhưng mất FS-MK-AIRCHEF100K; giỏ FS-MK-AIRCHEF6-TRANG (REGULAR) trả 1072800 thay vì 1044000",
+    "verdict": "CROSS_TEAM_CONTRADICTION",
+    "confidence": 0.8,
+    "status": "escalated",
+    "llm": "rules",
+    "dossier": {
+      "finding": {
+        "invariant": "FLASH_NOT_DEARER_THAN_OFF_FLASH",
+        "kind": "CROSS_TEAM_CONFLICT",
+        "severity": "high",
+        "title": "Trong giờ flash khách trả nhiều hơn ngoài giờ flash trên 20 giỏ (FS-MK-AIRCHEF6-TRANG, FS-MK-AIRCHEF6-DEN): giá flash thấp hơn nhưng mất FS-MK-AIRCHEF100K; giỏ FS-MK-AIRCHEF6-TRANG (REGULAR) trả 1072800 thay vì 1044000",
+        "fix_owner": "merchandising + seller_ops",
+        "entities": [
+          {
+            "type": "price_list",
+            "id": "plist_01M5MY1EES51VEFW8WM2YS8DYS",
+            "label": "FS1111-MK Flash 20-22h",
+            "owner_team": "merchandising"
+          },
+          {
+            "type": "promotion",
+            "id": "promo_01M60VZ5K1S6HCSMK83WWA2NGH",
+            "label": "FS-MK-AIRCHEF100K",
+            "owner_team": "seller_ops"
+          },
+          {
+            "type": "price_list",
+            "id": "plist_01M60VZXEENNDHQ5642RW8RP6Y",
+            "label": "FS-MK-X-Khuyến mãi shop AirChef",
+            "owner_team": "seller_ops"
+          }
+        ],
+        "expected": "trong giờ flash khách không trả nhiều hơn ngoài giờ flash cho cùng giỏ",
+        "actual": {
+          "example": {
+            "cart": "FS-MK-AIRCHEF6-TRANG",
+            "segment": "REGULAR",
+            "provider": "fs-ghn",
+            "pays_in_flash": 1072800,
+            "pays_off_flash": 1044000,
+            "subtotal_in_flash": 1490000
+          },
+          "lost_codes": [
+            {
+              "code": "FS-MK-AIRCHEF100K",
+              "owner": "seller_ops",
+              "min_spend": 1500000
+            }
+          ],
+          "prices": {
+            "FS-MK-AIRCHEF6-TRANG": {
+              "in_flash": 1490000,
+              "off_flash": 1550000
+            },
+            "FS-MK-AIRCHEF6-DEN": {
+              "in_flash": 1490000,
+              "off_flash": 1550000
+            }
+          }
+        },
+        "affected": {
+          "carts": 20,
+          "skus": [
+            "FS-MK-AIRCHEF6-TRANG",
+            "FS-MK-AIRCHEF6-DEN"
+          ],
+          "segments": [
+            "REGULAR",
+            "NEW"
+          ],
+          "providers": [
+            "fs-ghn",
+            "fs-ghtk",
+            "fs-ahamove",
+            "fs-vtp",
+            "fs-jt"
+          ],
+          "delta_vnd": 576000
+        },
+        "id": "F2",
+        "teams_involved": [
+          "merchandising",
+          "seller_ops"
+        ],
+        "recent_changes": [
+          {
+            "id": "fcc_01M60VZYKEST4KMQFB9PZ6CC9K",
+            "at": "2026-10-28T09:03:24.782Z",
+            "team": "merchandising",
+            "actor_email": "merch@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists/plist_01M5MY1EES51VEFW8WM2YS8DYS/prices/batch",
+            "entity_label": "FS1111-MK Flash 20-22h",
+            "diff": [
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].amount",
+                "after": null,
+                "before": 2690000
+              },
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].id",
+                "after": null,
+                "before": "price_01M60VZ0FE573GDKS3FX87TJ00"
+              },
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY1AW97K35C9XZDK34JBV9"
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].amount",
+                "after": null,
+                "before": 1790000
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].id",
+                "after": null,
+                "before": "price_01M60VZ0FE9FSAY7D9N1M91V08"
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5"
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].amount",
+                "after": null,
+                "before": 1790000
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].id",
+                "after": null,
+                "before": "price_01M60VZ0FES9CMYSJ3KME58MPG"
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EYE5QT755QM6CBZ41P"
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].amount",
+                "after": null,
+                "before": 1890000
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].id",
+                "after": null,
+                "before": "price_01M60VZ0FETZF7F7CGW7JADG9Y"
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].price_set_id",
+                "after": null,
+                "before": "pset_01M5N3D114TS96Q6T8SQRW5SWB"
+              },
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].amount",
+                "after": 1490000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].id",
+                "after": "price_01M60VZYJBNP112E3X7JX1THT2",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].price_set_id",
+                "after": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].amount",
+                "after": 1490000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].id",
+                "after": "price_01M60VZYJBZCDNVPNA214C1F59",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].price_set_id",
+                "after": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].amount",
+                "after": 2690000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].id",
+                "after": "price_01M60VZYJBZDS2YDWWC22H2YY1",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].price_set_id",
+                "after": "pset_01M5MY1AW97K35C9XZDK34JBV9",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].amount",
+                "after": 1890000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].id",
+                "after": "price_01M60VZYJC13F4X36DGE5ZDVRX",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].price_set_id",
+                "after": "pset_01M5N3D114TS96Q6T8SQRW5SWB",
+                "before": null
+              }
+            ]
+          },
+          {
+            "id": "fcc_01M60VZXF03S6H0D5EWCSZM6FG",
+            "at": "2026-10-28T09:03:23.616Z",
+            "team": "seller_ops",
+            "actor_email": "sellerops@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists",
+            "entity_label": "FS-MK-X-Khuyến mãi shop AirChef",
+            "diff": [
+              {
+                "path": "ends_at",
+                "after": null,
+                "before": null
+              },
+              {
+                "path": "id",
+                "after": "plist_01M60VZXEENNDHQ5642RW8RP6Y",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZXEDVX1KK7Z9TKZD69W1].amount",
+                "after": 1550000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZXEDVX1KK7Z9TKZD69W1].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZXEDVX1KK7Z9TKZD69W1].id",
+                "after": "price_01M60VZXEDVX1KK7Z9TKZD69W1",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZXEDVX1KK7Z9TKZD69W1].price_set_id",
+                "after": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZXEE3PZVVR8WKYMG3KQC].amount",
+                "after": 1550000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZXEE3PZVVR8WKYMG3KQC].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZXEE3PZVVR8WKYMG3KQC].id",
+                "after": "price_01M60VZXEE3PZVVR8WKYMG3KQC",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZXEE3PZVVR8WKYMG3KQC].price_set_id",
+                "after": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                "before": null
+              },
+              {
+                "path": "starts_at",
+                "after": null,
+                "before": null
+              },
+              {
+                "path": "status",
+                "after": "active",
+                "before": null
+              },
+              {
+                "path": "title",
+                "after": "FS-MK-X-Khuyến mãi shop AirChef",
+                "before": null
+              },
+              {
+                "path": "type",
+                "after": "sale",
+                "before": null
+              }
+            ]
+          },
+          {
+            "id": "fcc_01M60VZ5NVWTHFS728HGZX5GTE",
+            "at": "2026-10-28T09:02:59.259Z",
+            "team": null,
+            "actor_email": "admin@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/promotions",
+            "entity_label": "FS-MK-AIRCHEF100K",
+            "diff": [
+              {
+                "path": "application_method.allocation",
+                "after": "across",
+                "before": null
+              },
+              {
+                "path": "application_method.currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "application_method.id",
+                "after": "proappmet_01M60VZ5K27H4SJC9Q0N9M0MJM",
+                "before": null
+              },
+              {
+                "path": "application_method.max_quantity",
+                "after": null,
+                "before": null
+              },
+              {
+                "path": "application_method.target_rules[items.product.collection_id].attribute",
+                "after": "items.product.collection_id",
+                "before": null
+              },
+              {
+                "path": "application_method.target_rules[items.product.collection_id].operator",
+                "after": "in",
+                "before": null
+              },
+              {
+                "path": "application_method.target_rules[items.product.collection_id].values[0].value",
+                "after": "pcol_01M5MY17J4XRKTFZNNZJZ4B2FY",
+                "before": null
+              },
+              {
+                "path": "application_method.target_type",
+                "after": "items",
+                "before": null
+              },
+              {
+                "path": "application_method.type",
+                "after": "fixed",
+                "before": null
+              },
+              {
+                "path": "application_method.value",
+                "after": 100000,
+                "before": null
+              },
+              {
+                "path": "campaign_id",
+                "after": "procamp_01M5MY1FFAH0SQ15H59J18RC99",
+                "before": null
+              },
+              {
+                "path": "code",
+                "after": "FS-MK-AIRCHEF100K",
+                "before": null
+              },
+              {
+                "path": "id",
+                "after": "promo_01M60VZ5K1S6HCSMK83WWA2NGH",
+                "before": null
+              },
+              {
+                "path": "is_automatic",
+                "after": false,
+                "before": null
+              },
+              {
+                "path": "rules[currency_code].attribute",
+                "after": "currency_code",
+                "before": null
+              },
+              {
+                "path": "rules[currency_code].operator",
+                "after": "eq",
+                "before": null
+              },
+              {
+                "path": "rules[currency_code].values[0].value",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "rules[item_subtotal].attribute",
+                "after": "item_subtotal",
+                "before": null
+              },
+              {
+                "path": "rules[item_subtotal].operator",
+                "after": "gte",
+                "before": null
+              },
+              {
+                "path": "rules[item_subtotal].values[0].value",
+                "after": "1500000",
+                "before": null
+              },
+              {
+                "path": "status",
+                "after": "active",
+                "before": null
+              }
+            ]
+          },
+          {
+            "id": "fcc_01M60VZ0GH7Q6XZSBZM9NJY1CQ",
+            "at": "2026-10-28T09:02:53.969Z",
+            "team": null,
+            "actor_email": "admin@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists/plist_01M5MY1EES51VEFW8WM2YS8DYS/prices/batch",
+            "entity_label": "FS1111-MK Flash 20-22h",
+            "diff": [
+              {
+                "path": "prices[price_01M60VXYX40XY02JDJ16X8TP2J].amount",
+                "after": null,
+                "before": 2690000
+              },
+              {
+                "path": "prices[price_01M60VXYX40XY02JDJ16X8TP2J].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VXYX40XY02JDJ16X8TP2J].id",
+                "after": null,
+                "before": "price_01M60VXYX40XY02JDJ16X8TP2J"
+              },
+              {
+                "path": "prices[price_01M60VXYX40XY02JDJ16X8TP2J].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY1AW97K35C9XZDK34JBV9"
+              },
+              {
+                "path": "prices[price_01M60VXYX462S6C97P1NRYQHVJ].amount",
+                "after": null,
+                "before": 1790000
+              },
+              {
+                "path": "prices[price_01M60VXYX462S6C97P1NRYQHVJ].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VXYX462S6C97P1NRYQHVJ].id",
+                "after": null,
+                "before": "price_01M60VXYX462S6C97P1NRYQHVJ"
+              },
+              {
+                "path": "prices[price_01M60VXYX462S6C97P1NRYQHVJ].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5"
+              },
+              {
+                "path": "prices[price_01M60VXYX479BK1N33AD9VH6QK].amount",
+                "after": null,
+                "before": 1890000
+              },
+              {
+                "path": "prices[price_01M60VXYX479BK1N33AD9VH6QK].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VXYX479BK1N33AD9VH6QK].id",
+                "after": null,
+                "before": "price_01M60VXYX479BK1N33AD9VH6QK"
+              },
+              {
+                "path": "prices[price_01M60VXYX479BK1N33AD9VH6QK].price_set_id",
+                "after": null,
+                "before": "pset_01M5N3D114TS96Q6T8SQRW5SWB"
+              },
+              {
+                "path": "prices[price_01M60VXYX4DJQTWJJ1AA8WMV0P].amount",
+                "after": null,
+                "before": 1790000
+              },
+              {
+                "path": "prices[price_01M60VXYX4DJQTWJJ1AA8WMV0P].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VXYX4DJQTWJJ1AA8WMV0P].id",
+                "after": null,
+                "before": "price_01M60VXYX4DJQTWJJ1AA8WMV0P"
+              },
+              {
+                "path": "prices[price_01M60VXYX4DJQTWJJ1AA8WMV0P].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EYE5QT755QM6CBZ41P"
+              },
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].amount",
+                "after": 2690000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].id",
+                "after": "price_01M60VZ0FE573GDKS3FX87TJ00",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].price_set_id",
+                "after": "pset_01M5MY1AW97K35C9XZDK34JBV9",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].amount",
+                "after": 1790000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].id",
+                "after": "price_01M60VZ0FE9FSAY7D9N1M91V08",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].price_set_id",
+                "after": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].amount",
+                "after": 1790000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].id",
+                "after": "price_01M60VZ0FES9CMYSJ3KME58MPG",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].price_set_id",
+                "after": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].amount",
+                "after": 1890000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].id",
+                "after": "price_01M60VZ0FETZF7F7CGW7JADG9Y",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].price_set_id",
+                "after": "pset_01M5N3D114TS96Q6T8SQRW5SWB",
+                "before": null
+              }
+            ]
+          },
+          {
+            "id": "fcc_01M60VYZWDAT3NEK209P856HDQ",
+            "at": "2026-10-28T09:02:53.325Z",
+            "team": null,
+            "actor_email": "admin@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists/plist_01M5MY1EES51VEFW8WM2YS8DYS",
+            "entity_label": "FS1111-MK Flash 20-22h",
+            "diff": []
+          },
+          {
+            "id": "fcc_01M60VXYXZW2M0VSHKSYBXY9D0",
+            "at": "2026-10-28T09:02:19.583Z",
+            "team": null,
+            "actor_email": "admin@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists/plist_01M5MY1EES51VEFW8WM2YS8DYS/prices/batch",
+            "entity_label": "FS1111-MK Flash 20-22h",
+            "diff": [
+              {
+                "path": "prices[price_01M60VX2KB9C461BXN85NHWBTB].amount",
+                "after": null,
+                "before": 1450000
+              },
+              {
+                "path": "prices[price_01M60VX2KB9C461BXN85NHWBTB].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VX2KB9C461BXN85NHWBTB].id",
+                "after": null,
+                "before": "price_01M60VX2KB9C461BXN85NHWBTB"
+              },
+              {
+                "path": "prices[price_01M60VX2KB9C461BXN85NHWBTB].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EYE5QT755QM6CBZ41P"
+              },
+              {
+                "path": "prices[price_01M60VX2KBEP4ZANWG0MN08AFF].amount",
+                "after": null,
+                "before": 2690000
+              },
+              {
+                "path": "prices[price_01M60VX2KBEP4ZANWG0MN08AFF].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VX2KBEP4ZANWG0MN08AFF].id",
+                "after": null,
+                "before": "price_01M60VX2KBEP4ZANWG0MN08AFF"
+              },
+              {
+                "path": "prices[price_01M60VX2KBEP4ZANWG0MN08AFF].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY1AW97K35C9XZDK34JBV9"
+              },
+              {
+                "path": "prices[price_01M60VX2KBPP0AHP4QND81WFGQ].amount",
+                "after": null,
+                "before": 1450000
+              },
+              {
+                "path": "prices[price_01M60VX2KBPP0AHP4QND81WFGQ].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VX2KBPP0AHP4QND81WFGQ].id",
+                "after": null,
+                "before": "price_01M60VX2KBPP0AHP4QND81WFGQ"
+              },
+              {
+                "path": "prices[price_01M60VX2KBPP0AHP4QND81WFGQ].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5"
+              },
+              {
+                "path": "prices[price_01M60VX2KBVAK8PH1Q5X25M8GK].amount",
+                "after": null,
+                "before": 1890000
+              },
+              {
+                "path": "prices[price_01M60VX2KBVAK8PH1Q5X25M8GK].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VX2KBVAK8PH1Q5X25M8GK].id",
+                "after": null,
+                "before": "price_01M60VX2KBVAK8PH1Q5X25M8GK"
+              },
+              {
+                "path": "prices[price_01M60VX2KBVAK8PH1Q5X25M8GK].price_set_id",
+                "after": null,
+                "before": "pset_01M5N3D114TS96Q6T8SQRW5SWB"
+              },
+              {
+                "path": "prices[price_01M60VXYX40XY02JDJ16X8TP2J].amount",
+                "after": 2690000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX40XY02JDJ16X8TP2J].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX40XY02JDJ16X8TP2J].id",
+                "after": "price_01M60VXYX40XY02JDJ16X8TP2J",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX40XY02JDJ16X8TP2J].price_set_id",
+                "after": "pset_01M5MY1AW97K35C9XZDK34JBV9",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX462S6C97P1NRYQHVJ].amount",
+                "after": 1790000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX462S6C97P1NRYQHVJ].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX462S6C97P1NRYQHVJ].id",
+                "after": "price_01M60VXYX462S6C97P1NRYQHVJ",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX462S6C97P1NRYQHVJ].price_set_id",
+                "after": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX479BK1N33AD9VH6QK].amount",
+                "after": 1890000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX479BK1N33AD9VH6QK].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX479BK1N33AD9VH6QK].id",
+                "after": "price_01M60VXYX479BK1N33AD9VH6QK",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX479BK1N33AD9VH6QK].price_set_id",
+                "after": "pset_01M5N3D114TS96Q6T8SQRW5SWB",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX4DJQTWJJ1AA8WMV0P].amount",
+                "after": 1790000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX4DJQTWJJ1AA8WMV0P].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX4DJQTWJJ1AA8WMV0P].id",
+                "after": "price_01M60VXYX4DJQTWJJ1AA8WMV0P",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VXYX4DJQTWJJ1AA8WMV0P].price_set_id",
+                "after": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                "before": null
+              }
+            ]
+          }
+        ]
+      },
+      "consequences": [],
+      "affected_contracts": [
+        "CT-1111-MARKETPLACE"
+      ],
+      "evidence": {
+        "contract_changes": [
+          {
+            "contract_id": "CT-1111-MARKETPLACE",
+            "from": 60,
+            "to": 61,
+            "approved_by": "user_01M5MXYVPKPAM72XS97PE6VTN0"
+          }
+        ],
+        "changes": [
+          {
+            "id": "fcc_01M60VZYKEST4KMQFB9PZ6CC9K",
+            "at": "2026-10-28T09:03:24.782Z",
+            "team": "merchandising",
+            "actor_email": "merch@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists/plist_01M5MY1EES51VEFW8WM2YS8DYS/prices/batch",
+            "entity": "price_list:FS1111-MK Flash 20-22h",
+            "diff": [
+              {
+                "path": "prices[pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5/vnd].amount",
+                "before": 1790000,
+                "after": 1490000
+              },
+              {
+                "path": "prices[pset_01M5MY19EYE5QT755QM6CBZ41P/vnd].amount",
+                "before": 1790000,
+                "after": 1490000
+              }
+            ]
+          },
+          {
+            "id": "fcc_01M60VZXF03S6H0D5EWCSZM6FG",
+            "at": "2026-10-28T09:03:23.616Z",
+            "team": "seller_ops",
+            "actor_email": "sellerops@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists",
+            "entity": "price_list:FS-MK-X-Khuyến mãi shop AirChef",
+            "diff": [
+              {
+                "path": "ends_at",
+                "after": null,
+                "before": null
+              },
+              {
+                "path": "id",
+                "after": "plist_01M60VZXEENNDHQ5642RW8RP6Y",
+                "before": null
+              },
+              {
+                "path": "starts_at",
+                "after": null,
+                "before": null
+              },
+              {
+                "path": "status",
+                "after": "active",
+                "before": null
+              },
+              {
+                "path": "title",
+                "after": "FS-MK-X-Khuyến mãi shop AirChef",
+                "before": null
+              },
+              {
+                "path": "type",
+                "after": "sale",
+                "before": null
+              },
+              {
+                "path": "prices[pset_01M5MY19EYE5QT755QM6CBZ41P/vnd].amount",
+                "before": null,
+                "after": 1550000
+              },
+              {
+                "path": "prices[pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5/vnd].amount",
+                "before": null,
+                "after": 1550000
+              }
+            ]
+          }
+        ]
+      },
+      "debate": {
+        "analyst": "Kể từ mốc có 2 thay đổi cấu hình: merchandising (merch@flashsre.dev) POST price_list \"FS1111-MK Flash 20-22h\"; seller_ops (sellerops@flashsre.dev) POST price_list \"FS-MK-X-Khuyến mãi shop AirChef\". Phát hiện \"Trong giờ flash khách trả nhiều hơn ngoài giờ flash trên 20 giỏ (FS-MK-AIRCHEF6-TRANG, FS-MK-AIRCHEF6-DEN): giá flash thấp hơn nhưng mất FS-MK-AIRCHEF100K; giỏ FS-MK-AIRCHEF6-TRANG (REGULAR) trả 1072800 thay vì 1044000\" vi phạm FLASH_NOT_DEARER_THAN_OFF_FLASH của CT-1111-MARKETPLACE. Chưa phương án cấu hình nào làm hết lỗi.",
+        "engineer": "Engine làm đúng từng quy tắc: trong giờ flash lấy giá thấp hơn, ưu đãi xét ngưỡng trên tiền hàng. Mỗi cấu hình khớp điều khoản đã duyệt của team mình; chỉ khi ghép lại, giỏ FS-MK-AIRCHEF6-TRANG trong giờ flash trả 1.072.800đ, ngoài giờ flash 1.044.000đ. Đã thử: \"Đưa price_list \"FS-MK-X-Khuyến mãi shop AirChef\" về trạng thái trước thay đổi của seller_ops\": loại, cảnh báo hết nhưng khách trong giờ flash vẫn trả 1.072.800đ: chỉ làm giá ngoài giờ flash đắt lên; \"Đưa price_list \"FS1111-MK Flash 20-22h\" về trạng thái trước thay đổi của merchandising (chỉ đổi 2/4 giá: pset_01M5MY19EYE5QT755QM6CBZ41P: 1490000 -> 1790000; pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5: 1490000 -> 1790000; các giá khác giữ nguyên)\": hết lỗi nhưng lệch điều khoản đã duyệt (FLASH_PRICE_MATCHES_CONTRACT, ELIGIBILITY_LEAK); \"Chỉnh FS-MK-AIRCHEF100K cho khớp đúng điều khoản contract\": không hết lỗi; \"Hạ ngưỡng FS-MK-AIRCHEF100K từ 1.500.000đ xuống 1.490.000đ để giỏ flash vẫn đủ điều kiện (đổi điều khoản của seller_ops)\": hết lỗi nhưng lệch điều khoản đã duyệt (PROMOTION_MIN_SPEND, ELIGIBILITY_LEAK); \"Rollback mọi thay đổi kể từ mốc\": loại, cảnh báo hết nhưng khách trong giờ flash trả đắt hơn: 1.216.800đ thay vì 1.072.800đ. Không có bản sửa cấu hình nào vừa giúp khách vừa giữ đúng mọi điều khoản: chủ các điều khoản phải chọn sửa điều khoản nào.",
+        "judge": {
+          "verdict": "CROSS_TEAM_CONTRADICTION",
+          "confidence": 0.8,
+          "reason": "Không có phương án đạt"
+        }
+      },
+      "tests": [
+        {
+          "raises_price": false,
+          "id": "revert:price_list:FS-MK-X-Khuyến mãi shop AirChef",
+          "kind": "rollback",
+          "caused_by": [
+            "seller_ops"
+          ],
+          "entity": {
+            "type": "price_list",
+            "label": "FS-MK-X-Khuyến mãi shop AirChef"
+          },
+          "changes": [
+            "fcc_01M60VZXF03S6H0D5EWCSZM6FG"
+          ],
+          "summary": "Đưa price_list \"FS-MK-X-Khuyến mãi shop AirChef\" về trạng thái trước thay đổi của seller_ops",
+          "resolves_target": false,
+          "preserves": false,
+          "fully_clean": false,
+          "new_keys": [],
+          "remaining_keys": [
+            "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h"
+          ],
+          "resolves": [],
+          "patch_size": 72,
+          "harm": "Cảnh báo hết nhưng khách trong giờ flash vẫn trả 1.072.800đ: chỉ làm giá ngoài giờ flash đắt lên",
+          "patches": [
+            {
+              "type": "price_list.remove",
+              "title": "FS-MK-X-Khuyến mãi shop AirChef"
+            }
+          ]
+        },
+        {
+          "raises_price": true,
+          "id": "revert:price_list:FS1111-MK Flash 20-22h",
+          "kind": "rollback",
+          "caused_by": [
+            "merchandising"
+          ],
+          "entity": {
+            "type": "price_list",
+            "label": "FS1111-MK Flash 20-22h"
+          },
+          "changes": [
+            "fcc_01M60VZYKEST4KMQFB9PZ6CC9K"
+          ],
+          "summary": "Đưa price_list \"FS1111-MK Flash 20-22h\" về trạng thái trước thay đổi của merchandising (chỉ đổi 2/4 giá: pset_01M5MY19EYE5QT755QM6CBZ41P: 1490000 -> 1790000; pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5: 1490000 -> 1790000; các giá khác giữ nguyên)",
+          "resolves_target": true,
+          "preserves": false,
+          "fully_clean": false,
+          "new_keys": [
+            "CT-1111-MARKETPLACE|FLASH_PRICE_MATCHES_CONTRACT|CONFIG_DRIFT|FS1111-MK Flash 20-22h",
+            "CT-1111-MARKETPLACE|ELIGIBILITY_LEAK|CROSS_TEAM_CONFLICT|FS-MK-AIRCHEF100K"
+          ],
+          "remaining_keys": [
+            "CT-1111-MARKETPLACE|FLASH_PRICE_MATCHES_CONTRACT|CONFIG_DRIFT|FS1111-MK Flash 20-22h",
+            "CT-1111-MARKETPLACE|ELIGIBILITY_LEAK|CROSS_TEAM_CONFLICT|FS-MK-AIRCHEF100K"
+          ],
+          "resolves": [
+            "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h"
+          ],
+          "patch_size": 433,
+          "patches": [
+            {
+              "type": "price_list.state",
+              "title": "FS1111-MK Flash 20-22h",
+              "prices": [
+                {
+                  "price_set_id": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                  "amount": 1790000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                  "amount": 1790000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5MY1AW97K35C9XZDK34JBV9",
+                  "amount": 2690000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5N3D114TS96Q6T8SQRW5SWB",
+                  "amount": 1890000,
+                  "currency_code": "vnd"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "conform:FS-MK-AIRCHEF100K",
+          "kind": "conform",
+          "caused_by": [],
+          "entity": {
+            "type": "promotion",
+            "label": "FS-MK-AIRCHEF100K"
+          },
+          "summary": "Chỉnh FS-MK-AIRCHEF100K cho khớp đúng điều khoản contract",
+          "resolves_target": false,
+          "preserves": false,
+          "fully_clean": false,
+          "new_keys": [],
+          "remaining_keys": [
+            "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h"
+          ],
+          "resolves": [],
+          "patch_size": 57,
+          "patches": [
+            {
+              "type": "promotion.conform",
+              "code": "FS-MK-AIRCHEF100K"
+            }
+          ]
+        },
+        {
+          "id": "threshold:FS-MK-AIRCHEF100K",
+          "kind": "conform",
+          "caused_by": [],
+          "entity": {
+            "type": "promotion",
+            "label": "FS-MK-AIRCHEF100K"
+          },
+          "summary": "Hạ ngưỡng FS-MK-AIRCHEF100K từ 1.500.000đ xuống 1.490.000đ để giỏ flash vẫn đủ điều kiện (đổi điều khoản của seller_ops)",
+          "resolves_target": true,
+          "preserves": false,
+          "fully_clean": false,
+          "new_keys": [
+            "CT-1111-MARKETPLACE|PROMOTION_MIN_SPEND|CONFIG_DRIFT|FS-MK-AIRCHEF100K",
+            "CT-1111-MARKETPLACE|ELIGIBILITY_LEAK|CONFIG_DRIFT|FS-MK-AIRCHEF100K"
+          ],
+          "remaining_keys": [
+            "CT-1111-MARKETPLACE|PROMOTION_MIN_SPEND|CONFIG_DRIFT|FS-MK-AIRCHEF100K",
+            "CT-1111-MARKETPLACE|ELIGIBILITY_LEAK|CONFIG_DRIFT|FS-MK-AIRCHEF100K"
+          ],
+          "resolves": [
+            "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h"
+          ],
+          "patch_size": 75,
+          "patches": [
+            {
+              "type": "promotion.min_spend",
+              "code": "FS-MK-AIRCHEF100K",
+              "value": 1490000
+            }
+          ]
+        },
+        {
+          "id": "revert:all",
+          "kind": "rollback_all",
+          "raises_price": true,
+          "caused_by": [
+            "seller_ops",
+            "merchandising"
+          ],
+          "entity": null,
+          "summary": "Rollback mọi thay đổi kể từ mốc",
+          "resolves_target": false,
+          "preserves": false,
+          "fully_clean": false,
+          "new_keys": [],
+          "remaining_keys": [
+            "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h"
+          ],
+          "resolves": [],
+          "patch_size": 504,
+          "harm": "Cảnh báo hết nhưng khách trong giờ flash trả đắt hơn: 1.216.800đ thay vì 1.072.800đ",
+          "patches": [
+            {
+              "type": "price_list.remove",
+              "title": "FS-MK-X-Khuyến mãi shop AirChef"
+            },
+            {
+              "type": "price_list.state",
+              "title": "FS1111-MK Flash 20-22h",
+              "prices": [
+                {
+                  "price_set_id": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                  "amount": 1790000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                  "amount": 1790000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5MY1AW97K35C9XZDK34JBV9",
+                  "amount": 2690000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5N3D114TS96Q6T8SQRW5SWB",
+                  "amount": 1890000,
+                  "currency_code": "vnd"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "chosen_fix": null,
+      "authority": "ESCALATE",
+      "approvers": [
+        "merchandising",
+        "seller_ops"
+      ],
+      "covered_findings": [],
+      "covered_detail": []
+    },
+    "sample_id": "FLASH_DEARER_THAN_SHOP_PROMO-01"
+  },
+  {
+    "contract_id": "CT-1111-MARKETPLACE",
+    "finding_key": "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h",
+    "title": "Trong giờ flash khách trả nhiều hơn ngoài giờ flash trên 20 giỏ (FS-MK-AIRCHEF6-TRANG, FS-MK-AIRCHEF6-DEN): giá flash thấp hơn nhưng mất FS-MK-AIRCHEF100K; giỏ FS-MK-AIRCHEF6-TRANG (REGULAR) trả 1065600 thay vì 1022400",
+    "verdict": "CROSS_TEAM_CONTRADICTION",
+    "confidence": 0.8,
+    "status": "escalated",
+    "llm": "rules",
+    "dossier": {
+      "finding": {
+        "invariant": "FLASH_NOT_DEARER_THAN_OFF_FLASH",
+        "kind": "CROSS_TEAM_CONFLICT",
+        "severity": "high",
+        "title": "Trong giờ flash khách trả nhiều hơn ngoài giờ flash trên 20 giỏ (FS-MK-AIRCHEF6-TRANG, FS-MK-AIRCHEF6-DEN): giá flash thấp hơn nhưng mất FS-MK-AIRCHEF100K; giỏ FS-MK-AIRCHEF6-TRANG (REGULAR) trả 1065600 thay vì 1022400",
+        "fix_owner": "merchandising + seller_ops",
+        "entities": [
+          {
+            "type": "price_list",
+            "id": "plist_01M5MY1EES51VEFW8WM2YS8DYS",
+            "label": "FS1111-MK Flash 20-22h",
+            "owner_team": "merchandising"
+          },
+          {
+            "type": "promotion",
+            "id": "promo_01M60W1EMQAA14SD3RBERBH9FQ",
+            "label": "FS-MK-AIRCHEF100K",
+            "owner_team": "seller_ops"
+          },
+          {
+            "type": "price_list",
+            "id": "plist_01M60W1NZQ3JR0MN5QYDYX9KAZ",
+            "label": "FS-MK-X-Khuyến mãi shop AirChef",
+            "owner_team": "seller_ops"
+          }
+        ],
+        "expected": "trong giờ flash khách không trả nhiều hơn ngoài giờ flash cho cùng giỏ",
+        "actual": {
+          "example": {
+            "cart": "FS-MK-AIRCHEF6-TRANG",
+            "segment": "REGULAR",
+            "provider": "fs-ghn",
+            "pays_in_flash": 1065600,
+            "pays_off_flash": 1022400,
+            "subtotal_in_flash": 1480000
+          },
+          "lost_codes": [
+            {
+              "code": "FS-MK-AIRCHEF100K",
+              "owner": "seller_ops",
+              "min_spend": 1500000
+            }
+          ],
+          "prices": {
+            "FS-MK-AIRCHEF6-TRANG": {
+              "in_flash": 1480000,
+              "off_flash": 1520000
+            },
+            "FS-MK-AIRCHEF6-DEN": {
+              "in_flash": 1480000,
+              "off_flash": 1520000
+            }
+          }
+        },
+        "affected": {
+          "carts": 20,
+          "skus": [
+            "FS-MK-AIRCHEF6-TRANG",
+            "FS-MK-AIRCHEF6-DEN"
+          ],
+          "segments": [
+            "REGULAR",
+            "NEW"
+          ],
+          "providers": [
+            "fs-ghn",
+            "fs-ghtk",
+            "fs-ahamove",
+            "fs-vtp",
+            "fs-jt"
+          ],
+          "delta_vnd": 864000
+        },
+        "id": "F2",
+        "teams_involved": [
+          "merchandising",
+          "seller_ops"
+        ],
+        "recent_changes": [
+          {
+            "id": "fcc_01M60W1Q531YHQ55H9M89524R3",
+            "at": "2026-10-28T09:04:22.691Z",
+            "team": "merchandising",
+            "actor_email": "merch@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists/plist_01M5MY1EES51VEFW8WM2YS8DYS/prices/batch",
+            "entity_label": "FS1111-MK Flash 20-22h",
+            "diff": [
+              {
+                "path": "prices[price_01M60W19841AZ971WM9KPPXEF2].amount",
+                "after": null,
+                "before": 1790000
+              },
+              {
+                "path": "prices[price_01M60W19841AZ971WM9KPPXEF2].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60W19841AZ971WM9KPPXEF2].id",
+                "after": null,
+                "before": "price_01M60W19841AZ971WM9KPPXEF2"
+              },
+              {
+                "path": "prices[price_01M60W19841AZ971WM9KPPXEF2].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EYE5QT755QM6CBZ41P"
+              },
+              {
+                "path": "prices[price_01M60W19849EXRQ5QEECBH3EJQ].amount",
+                "after": null,
+                "before": 1890000
+              },
+              {
+                "path": "prices[price_01M60W19849EXRQ5QEECBH3EJQ].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60W19849EXRQ5QEECBH3EJQ].id",
+                "after": null,
+                "before": "price_01M60W19849EXRQ5QEECBH3EJQ"
+              },
+              {
+                "path": "prices[price_01M60W19849EXRQ5QEECBH3EJQ].price_set_id",
+                "after": null,
+                "before": "pset_01M5N3D114TS96Q6T8SQRW5SWB"
+              },
+              {
+                "path": "prices[price_01M60W1984MXSC5J8J01FE991F].amount",
+                "after": null,
+                "before": 2690000
+              },
+              {
+                "path": "prices[price_01M60W1984MXSC5J8J01FE991F].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60W1984MXSC5J8J01FE991F].id",
+                "after": null,
+                "before": "price_01M60W1984MXSC5J8J01FE991F"
+              },
+              {
+                "path": "prices[price_01M60W1984MXSC5J8J01FE991F].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY1AW97K35C9XZDK34JBV9"
+              },
+              {
+                "path": "prices[price_01M60W1984WMKJ16CZ18NWDZMY].amount",
+                "after": null,
+                "before": 1790000
+              },
+              {
+                "path": "prices[price_01M60W1984WMKJ16CZ18NWDZMY].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60W1984WMKJ16CZ18NWDZMY].id",
+                "after": null,
+                "before": "price_01M60W1984WMKJ16CZ18NWDZMY"
+              },
+              {
+                "path": "prices[price_01M60W1984WMKJ16CZ18NWDZMY].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5"
+              },
+              {
+                "path": "prices[price_01M60W1Q431K8PBDMEK4D976AX].amount",
+                "after": 1480000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q431K8PBDMEK4D976AX].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q431K8PBDMEK4D976AX].id",
+                "after": "price_01M60W1Q431K8PBDMEK4D976AX",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q431K8PBDMEK4D976AX].price_set_id",
+                "after": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q435T7CKG5HTHS0ZGJX].amount",
+                "after": 2690000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q435T7CKG5HTHS0ZGJX].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q435T7CKG5HTHS0ZGJX].id",
+                "after": "price_01M60W1Q435T7CKG5HTHS0ZGJX",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q435T7CKG5HTHS0ZGJX].price_set_id",
+                "after": "pset_01M5MY1AW97K35C9XZDK34JBV9",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q43QG1HMSW9AR1G5Y1M].amount",
+                "after": 1480000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q43QG1HMSW9AR1G5Y1M].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q43QG1HMSW9AR1G5Y1M].id",
+                "after": "price_01M60W1Q43QG1HMSW9AR1G5Y1M",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q43QG1HMSW9AR1G5Y1M].price_set_id",
+                "after": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q43YGGX48RM5NMSM9SE].amount",
+                "after": 1890000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q43YGGX48RM5NMSM9SE].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q43YGGX48RM5NMSM9SE].id",
+                "after": "price_01M60W1Q43YGGX48RM5NMSM9SE",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1Q43YGGX48RM5NMSM9SE].price_set_id",
+                "after": "pset_01M5N3D114TS96Q6T8SQRW5SWB",
+                "before": null
+              }
+            ]
+          },
+          {
+            "id": "fcc_01M60W1P0N5ZZV0WWRP1TNXEX4",
+            "at": "2026-10-28T09:04:21.525Z",
+            "team": "seller_ops",
+            "actor_email": "sellerops@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists",
+            "entity_label": "FS-MK-X-Khuyến mãi shop AirChef",
+            "diff": [
+              {
+                "path": "ends_at",
+                "after": null,
+                "before": null
+              },
+              {
+                "path": "id",
+                "after": "plist_01M60W1NZQ3JR0MN5QYDYX9KAZ",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1NZQBNKP69RR8F6XV275].amount",
+                "after": 1520000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1NZQBNKP69RR8F6XV275].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1NZQBNKP69RR8F6XV275].id",
+                "after": "price_01M60W1NZQBNKP69RR8F6XV275",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1NZQBNKP69RR8F6XV275].price_set_id",
+                "after": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1NZQMWC7ESJY7SM0A8V4].amount",
+                "after": 1520000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1NZQMWC7ESJY7SM0A8V4].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1NZQMWC7ESJY7SM0A8V4].id",
+                "after": "price_01M60W1NZQMWC7ESJY7SM0A8V4",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1NZQMWC7ESJY7SM0A8V4].price_set_id",
+                "after": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                "before": null
+              },
+              {
+                "path": "starts_at",
+                "after": null,
+                "before": null
+              },
+              {
+                "path": "status",
+                "after": "active",
+                "before": null
+              },
+              {
+                "path": "title",
+                "after": "FS-MK-X-Khuyến mãi shop AirChef",
+                "before": null
+              },
+              {
+                "path": "type",
+                "after": "sale",
+                "before": null
+              }
+            ]
+          },
+          {
+            "id": "fcc_01M60W1ERGWXJ8SNA1TN4JH8N5",
+            "at": "2026-10-28T09:04:14.096Z",
+            "team": null,
+            "actor_email": "admin@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/promotions",
+            "entity_label": "FS-MK-AIRCHEF100K",
+            "diff": [
+              {
+                "path": "application_method.allocation",
+                "after": "across",
+                "before": null
+              },
+              {
+                "path": "application_method.currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "application_method.id",
+                "after": "proappmet_01M60W1EMQVK6J3E8DKCKHD0BV",
+                "before": null
+              },
+              {
+                "path": "application_method.max_quantity",
+                "after": null,
+                "before": null
+              },
+              {
+                "path": "application_method.target_rules[items.product.collection_id].attribute",
+                "after": "items.product.collection_id",
+                "before": null
+              },
+              {
+                "path": "application_method.target_rules[items.product.collection_id].operator",
+                "after": "in",
+                "before": null
+              },
+              {
+                "path": "application_method.target_rules[items.product.collection_id].values[0].value",
+                "after": "pcol_01M5MY17J4XRKTFZNNZJZ4B2FY",
+                "before": null
+              },
+              {
+                "path": "application_method.target_type",
+                "after": "items",
+                "before": null
+              },
+              {
+                "path": "application_method.type",
+                "after": "fixed",
+                "before": null
+              },
+              {
+                "path": "application_method.value",
+                "after": 100000,
+                "before": null
+              },
+              {
+                "path": "campaign_id",
+                "after": "procamp_01M5MY1FFAH0SQ15H59J18RC99",
+                "before": null
+              },
+              {
+                "path": "code",
+                "after": "FS-MK-AIRCHEF100K",
+                "before": null
+              },
+              {
+                "path": "id",
+                "after": "promo_01M60W1EMQAA14SD3RBERBH9FQ",
+                "before": null
+              },
+              {
+                "path": "is_automatic",
+                "after": false,
+                "before": null
+              },
+              {
+                "path": "rules[currency_code].attribute",
+                "after": "currency_code",
+                "before": null
+              },
+              {
+                "path": "rules[currency_code].operator",
+                "after": "eq",
+                "before": null
+              },
+              {
+                "path": "rules[currency_code].values[0].value",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "rules[item_subtotal].attribute",
+                "after": "item_subtotal",
+                "before": null
+              },
+              {
+                "path": "rules[item_subtotal].operator",
+                "after": "gte",
+                "before": null
+              },
+              {
+                "path": "rules[item_subtotal].values[0].value",
+                "after": "1500000",
+                "before": null
+              },
+              {
+                "path": "status",
+                "after": "active",
+                "before": null
+              }
+            ]
+          },
+          {
+            "id": "fcc_01M60W1996QMPRA9CGFVYG5D2A",
+            "at": "2026-10-28T09:04:08.486Z",
+            "team": null,
+            "actor_email": "admin@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists/plist_01M5MY1EES51VEFW8WM2YS8DYS/prices/batch",
+            "entity_label": "FS1111-MK Flash 20-22h",
+            "diff": [
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].amount",
+                "after": null,
+                "before": 1490000
+              },
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].id",
+                "after": null,
+                "before": "price_01M60VZYJBNP112E3X7JX1THT2"
+              },
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5"
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].amount",
+                "after": null,
+                "before": 1490000
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].id",
+                "after": null,
+                "before": "price_01M60VZYJBZCDNVPNA214C1F59"
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EYE5QT755QM6CBZ41P"
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].amount",
+                "after": null,
+                "before": 2690000
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].id",
+                "after": null,
+                "before": "price_01M60VZYJBZDS2YDWWC22H2YY1"
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY1AW97K35C9XZDK34JBV9"
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].amount",
+                "after": null,
+                "before": 1890000
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].id",
+                "after": null,
+                "before": "price_01M60VZYJC13F4X36DGE5ZDVRX"
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].price_set_id",
+                "after": null,
+                "before": "pset_01M5N3D114TS96Q6T8SQRW5SWB"
+              },
+              {
+                "path": "prices[price_01M60W19841AZ971WM9KPPXEF2].amount",
+                "after": 1790000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W19841AZ971WM9KPPXEF2].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W19841AZ971WM9KPPXEF2].id",
+                "after": "price_01M60W19841AZ971WM9KPPXEF2",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W19841AZ971WM9KPPXEF2].price_set_id",
+                "after": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W19849EXRQ5QEECBH3EJQ].amount",
+                "after": 1890000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W19849EXRQ5QEECBH3EJQ].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W19849EXRQ5QEECBH3EJQ].id",
+                "after": "price_01M60W19849EXRQ5QEECBH3EJQ",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W19849EXRQ5QEECBH3EJQ].price_set_id",
+                "after": "pset_01M5N3D114TS96Q6T8SQRW5SWB",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1984MXSC5J8J01FE991F].amount",
+                "after": 2690000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1984MXSC5J8J01FE991F].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1984MXSC5J8J01FE991F].id",
+                "after": "price_01M60W1984MXSC5J8J01FE991F",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1984MXSC5J8J01FE991F].price_set_id",
+                "after": "pset_01M5MY1AW97K35C9XZDK34JBV9",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1984WMKJ16CZ18NWDZMY].amount",
+                "after": 1790000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1984WMKJ16CZ18NWDZMY].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1984WMKJ16CZ18NWDZMY].id",
+                "after": "price_01M60W1984WMKJ16CZ18NWDZMY",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60W1984WMKJ16CZ18NWDZMY].price_set_id",
+                "after": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                "before": null
+              }
+            ]
+          },
+          {
+            "id": "fcc_01M60W18Q527Q3M1TC30VCD3YM",
+            "at": "2026-10-28T09:04:07.909Z",
+            "team": null,
+            "actor_email": "admin@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists/plist_01M5MY1EES51VEFW8WM2YS8DYS",
+            "entity_label": "FS1111-MK Flash 20-22h",
+            "diff": []
+          },
+          {
+            "id": "fcc_01M60VZYKEST4KMQFB9PZ6CC9K",
+            "at": "2026-10-28T09:03:24.782Z",
+            "team": "merchandising",
+            "actor_email": "merch@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists/plist_01M5MY1EES51VEFW8WM2YS8DYS/prices/batch",
+            "entity_label": "FS1111-MK Flash 20-22h",
+            "diff": [
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].amount",
+                "after": null,
+                "before": 2690000
+              },
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].id",
+                "after": null,
+                "before": "price_01M60VZ0FE573GDKS3FX87TJ00"
+              },
+              {
+                "path": "prices[price_01M60VZ0FE573GDKS3FX87TJ00].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY1AW97K35C9XZDK34JBV9"
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].amount",
+                "after": null,
+                "before": 1790000
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].id",
+                "after": null,
+                "before": "price_01M60VZ0FE9FSAY7D9N1M91V08"
+              },
+              {
+                "path": "prices[price_01M60VZ0FE9FSAY7D9N1M91V08].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5"
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].amount",
+                "after": null,
+                "before": 1790000
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].id",
+                "after": null,
+                "before": "price_01M60VZ0FES9CMYSJ3KME58MPG"
+              },
+              {
+                "path": "prices[price_01M60VZ0FES9CMYSJ3KME58MPG].price_set_id",
+                "after": null,
+                "before": "pset_01M5MY19EYE5QT755QM6CBZ41P"
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].amount",
+                "after": null,
+                "before": 1890000
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].currency_code",
+                "after": null,
+                "before": "vnd"
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].id",
+                "after": null,
+                "before": "price_01M60VZ0FETZF7F7CGW7JADG9Y"
+              },
+              {
+                "path": "prices[price_01M60VZ0FETZF7F7CGW7JADG9Y].price_set_id",
+                "after": null,
+                "before": "pset_01M5N3D114TS96Q6T8SQRW5SWB"
+              },
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].amount",
+                "after": 1490000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].id",
+                "after": "price_01M60VZYJBNP112E3X7JX1THT2",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBNP112E3X7JX1THT2].price_set_id",
+                "after": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].amount",
+                "after": 1490000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].id",
+                "after": "price_01M60VZYJBZCDNVPNA214C1F59",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZCDNVPNA214C1F59].price_set_id",
+                "after": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].amount",
+                "after": 2690000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].id",
+                "after": "price_01M60VZYJBZDS2YDWWC22H2YY1",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJBZDS2YDWWC22H2YY1].price_set_id",
+                "after": "pset_01M5MY1AW97K35C9XZDK34JBV9",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].amount",
+                "after": 1890000,
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].currency_code",
+                "after": "vnd",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].id",
+                "after": "price_01M60VZYJC13F4X36DGE5ZDVRX",
+                "before": null
+              },
+              {
+                "path": "prices[price_01M60VZYJC13F4X36DGE5ZDVRX].price_set_id",
+                "after": "pset_01M5N3D114TS96Q6T8SQRW5SWB",
+                "before": null
+              }
+            ]
+          }
+        ]
+      },
+      "consequences": [],
+      "affected_contracts": [
+        "CT-1111-MARKETPLACE"
+      ],
+      "evidence": {
+        "contract_changes": [
+          {
+            "contract_id": "CT-1111-MARKETPLACE",
+            "from": 60,
+            "to": 63,
+            "approved_by": "user_01M5MXYVPKPAM72XS97PE6VTN0"
+          },
+          {
+            "contract_id": "CT-BRANDDAY-AIRCHEF",
+            "from": 57,
+            "to": 58,
+            "approved_by": "user_01M4TJMG6HV0KHG8W3WTNQE5CP"
+          },
+          {
+            "contract_id": "CT-GIADUNG-WEEK",
+            "from": 60,
+            "to": 61,
+            "approved_by": "user_01M4TJMG6HV0KHG8W3WTNQE5CP"
+          }
+        ],
+        "changes": [
+          {
+            "id": "fcc_01M60W1Q531YHQ55H9M89524R3",
+            "at": "2026-10-28T09:04:22.691Z",
+            "team": "merchandising",
+            "actor_email": "merch@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists/plist_01M5MY1EES51VEFW8WM2YS8DYS/prices/batch",
+            "entity": "price_list:FS1111-MK Flash 20-22h",
+            "diff": [
+              {
+                "path": "prices[pset_01M5MY19EYE5QT755QM6CBZ41P/vnd].amount",
+                "before": 1790000,
+                "after": 1480000
+              },
+              {
+                "path": "prices[pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5/vnd].amount",
+                "before": 1790000,
+                "after": 1480000
+              }
+            ]
+          },
+          {
+            "id": "fcc_01M60W1P0N5ZZV0WWRP1TNXEX4",
+            "at": "2026-10-28T09:04:21.525Z",
+            "team": "seller_ops",
+            "actor_email": "sellerops@flashsre.dev",
+            "method": "POST",
+            "route": "/admin/price-lists",
+            "entity": "price_list:FS-MK-X-Khuyến mãi shop AirChef",
+            "diff": [
+              {
+                "path": "ends_at",
+                "after": null,
+                "before": null
+              },
+              {
+                "path": "id",
+                "after": "plist_01M60W1NZQ3JR0MN5QYDYX9KAZ",
+                "before": null
+              },
+              {
+                "path": "starts_at",
+                "after": null,
+                "before": null
+              },
+              {
+                "path": "status",
+                "after": "active",
+                "before": null
+              },
+              {
+                "path": "title",
+                "after": "FS-MK-X-Khuyến mãi shop AirChef",
+                "before": null
+              },
+              {
+                "path": "type",
+                "after": "sale",
+                "before": null
+              },
+              {
+                "path": "prices[pset_01M5MY19EYE5QT755QM6CBZ41P/vnd].amount",
+                "before": null,
+                "after": 1520000
+              },
+              {
+                "path": "prices[pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5/vnd].amount",
+                "before": null,
+                "after": 1520000
+              }
+            ]
+          }
+        ]
+      },
+      "debate": {
+        "analyst": "Kể từ mốc có 2 thay đổi cấu hình: merchandising (merch@flashsre.dev) POST price_list \"FS1111-MK Flash 20-22h\"; seller_ops (sellerops@flashsre.dev) POST price_list \"FS-MK-X-Khuyến mãi shop AirChef\". Phát hiện \"Trong giờ flash khách trả nhiều hơn ngoài giờ flash trên 20 giỏ (FS-MK-AIRCHEF6-TRANG, FS-MK-AIRCHEF6-DEN): giá flash thấp hơn nhưng mất FS-MK-AIRCHEF100K; giỏ FS-MK-AIRCHEF6-TRANG (REGULAR) trả 1065600 thay vì 1022400\" vi phạm FLASH_NOT_DEARER_THAN_OFF_FLASH của CT-1111-MARKETPLACE. Chưa phương án cấu hình nào làm hết lỗi.",
+        "engineer": "Engine làm đúng từng quy tắc: trong giờ flash lấy giá thấp hơn, ưu đãi xét ngưỡng trên tiền hàng. Mỗi cấu hình khớp điều khoản đã duyệt của team mình; chỉ khi ghép lại, giỏ FS-MK-AIRCHEF6-TRANG trong giờ flash trả 1.065.600đ, ngoài giờ flash 1.022.400đ. Đã thử: \"Đưa price_list \"FS-MK-X-Khuyến mãi shop AirChef\" về trạng thái trước thay đổi của seller_ops\": loại, cảnh báo hết nhưng khách trong giờ flash vẫn trả 1.065.600đ: chỉ làm giá ngoài giờ flash đắt lên; \"Đưa price_list \"FS1111-MK Flash 20-22h\" về trạng thái trước thay đổi của merchandising (chỉ đổi 2/4 giá: pset_01M5MY19EYE5QT755QM6CBZ41P: 1480000 -> 1790000; pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5: 1480000 -> 1790000; các giá khác giữ nguyên)\": hết lỗi nhưng lệch điều khoản đã duyệt (FLASH_PRICE_MATCHES_CONTRACT, ELIGIBILITY_LEAK); \"Chỉnh FS-MK-AIRCHEF100K cho khớp đúng điều khoản contract\": không hết lỗi; \"Hạ ngưỡng FS-MK-AIRCHEF100K từ 1.500.000đ xuống 1.480.000đ để giỏ flash vẫn đủ điều kiện (đổi điều khoản của seller_ops)\": hết lỗi nhưng lệch điều khoản đã duyệt (PROMOTION_MIN_SPEND, ELIGIBILITY_LEAK); \"Rollback mọi thay đổi kể từ mốc\": loại, cảnh báo hết nhưng khách trong giờ flash trả đắt hơn: 1.216.800đ thay vì 1.065.600đ. Không có bản sửa cấu hình nào vừa giúp khách vừa giữ đúng mọi điều khoản: chủ các điều khoản phải chọn sửa điều khoản nào.",
+        "judge": {
+          "verdict": "CROSS_TEAM_CONTRADICTION",
+          "confidence": 0.8,
+          "reason": "Không có phương án đạt"
+        }
+      },
+      "tests": [
+        {
+          "raises_price": false,
+          "id": "revert:price_list:FS-MK-X-Khuyến mãi shop AirChef",
+          "kind": "rollback",
+          "caused_by": [
+            "seller_ops"
+          ],
+          "entity": {
+            "type": "price_list",
+            "label": "FS-MK-X-Khuyến mãi shop AirChef"
+          },
+          "changes": [
+            "fcc_01M60W1P0N5ZZV0WWRP1TNXEX4"
+          ],
+          "summary": "Đưa price_list \"FS-MK-X-Khuyến mãi shop AirChef\" về trạng thái trước thay đổi của seller_ops",
+          "resolves_target": false,
+          "preserves": false,
+          "fully_clean": false,
+          "new_keys": [],
+          "remaining_keys": [
+            "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h"
+          ],
+          "resolves": [],
+          "patch_size": 72,
+          "harm": "Cảnh báo hết nhưng khách trong giờ flash vẫn trả 1.065.600đ: chỉ làm giá ngoài giờ flash đắt lên",
+          "patches": [
+            {
+              "type": "price_list.remove",
+              "title": "FS-MK-X-Khuyến mãi shop AirChef"
+            }
+          ]
+        },
+        {
+          "raises_price": true,
+          "id": "revert:price_list:FS1111-MK Flash 20-22h",
+          "kind": "rollback",
+          "caused_by": [
+            "merchandising"
+          ],
+          "entity": {
+            "type": "price_list",
+            "label": "FS1111-MK Flash 20-22h"
+          },
+          "changes": [
+            "fcc_01M60W1Q531YHQ55H9M89524R3"
+          ],
+          "summary": "Đưa price_list \"FS1111-MK Flash 20-22h\" về trạng thái trước thay đổi của merchandising (chỉ đổi 2/4 giá: pset_01M5MY19EYE5QT755QM6CBZ41P: 1480000 -> 1790000; pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5: 1480000 -> 1790000; các giá khác giữ nguyên)",
+          "resolves_target": true,
+          "preserves": false,
+          "fully_clean": false,
+          "new_keys": [
+            "CT-1111-MARKETPLACE|FLASH_PRICE_MATCHES_CONTRACT|CONFIG_DRIFT|FS1111-MK Flash 20-22h",
+            "CT-1111-MARKETPLACE|ELIGIBILITY_LEAK|CROSS_TEAM_CONFLICT|FS-MK-AIRCHEF100K"
+          ],
+          "remaining_keys": [
+            "CT-1111-MARKETPLACE|FLASH_PRICE_MATCHES_CONTRACT|CONFIG_DRIFT|FS1111-MK Flash 20-22h",
+            "CT-1111-MARKETPLACE|ELIGIBILITY_LEAK|CROSS_TEAM_CONFLICT|FS-MK-AIRCHEF100K"
+          ],
+          "resolves": [
+            "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h"
+          ],
+          "patch_size": 433,
+          "patches": [
+            {
+              "type": "price_list.state",
+              "title": "FS1111-MK Flash 20-22h",
+              "prices": [
+                {
+                  "price_set_id": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                  "amount": 1790000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                  "amount": 1790000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5MY1AW97K35C9XZDK34JBV9",
+                  "amount": 2690000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5N3D114TS96Q6T8SQRW5SWB",
+                  "amount": 1890000,
+                  "currency_code": "vnd"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "conform:FS-MK-AIRCHEF100K",
+          "kind": "conform",
+          "caused_by": [],
+          "entity": {
+            "type": "promotion",
+            "label": "FS-MK-AIRCHEF100K"
+          },
+          "summary": "Chỉnh FS-MK-AIRCHEF100K cho khớp đúng điều khoản contract",
+          "resolves_target": false,
+          "preserves": false,
+          "fully_clean": false,
+          "new_keys": [],
+          "remaining_keys": [
+            "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h"
+          ],
+          "resolves": [],
+          "patch_size": 57,
+          "patches": [
+            {
+              "type": "promotion.conform",
+              "code": "FS-MK-AIRCHEF100K"
+            }
+          ]
+        },
+        {
+          "id": "threshold:FS-MK-AIRCHEF100K",
+          "kind": "conform",
+          "caused_by": [],
+          "entity": {
+            "type": "promotion",
+            "label": "FS-MK-AIRCHEF100K"
+          },
+          "summary": "Hạ ngưỡng FS-MK-AIRCHEF100K từ 1.500.000đ xuống 1.480.000đ để giỏ flash vẫn đủ điều kiện (đổi điều khoản của seller_ops)",
+          "resolves_target": true,
+          "preserves": false,
+          "fully_clean": false,
+          "new_keys": [
+            "CT-1111-MARKETPLACE|PROMOTION_MIN_SPEND|CONFIG_DRIFT|FS-MK-AIRCHEF100K",
+            "CT-1111-MARKETPLACE|ELIGIBILITY_LEAK|CONFIG_DRIFT|FS-MK-AIRCHEF100K"
+          ],
+          "remaining_keys": [
+            "CT-1111-MARKETPLACE|PROMOTION_MIN_SPEND|CONFIG_DRIFT|FS-MK-AIRCHEF100K",
+            "CT-1111-MARKETPLACE|ELIGIBILITY_LEAK|CONFIG_DRIFT|FS-MK-AIRCHEF100K"
+          ],
+          "resolves": [
+            "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h"
+          ],
+          "patch_size": 75,
+          "patches": [
+            {
+              "type": "promotion.min_spend",
+              "code": "FS-MK-AIRCHEF100K",
+              "value": 1480000
+            }
+          ]
+        },
+        {
+          "id": "revert:all",
+          "kind": "rollback_all",
+          "raises_price": true,
+          "caused_by": [
+            "seller_ops",
+            "merchandising"
+          ],
+          "entity": null,
+          "summary": "Rollback mọi thay đổi kể từ mốc",
+          "resolves_target": false,
+          "preserves": false,
+          "fully_clean": false,
+          "new_keys": [],
+          "remaining_keys": [
+            "CT-1111-MARKETPLACE|FLASH_NOT_DEARER_THAN_OFF_FLASH|CROSS_TEAM_CONFLICT|FS1111-MK Flash 20-22h"
+          ],
+          "resolves": [],
+          "patch_size": 504,
+          "harm": "Cảnh báo hết nhưng khách trong giờ flash trả đắt hơn: 1.216.800đ thay vì 1.065.600đ",
+          "patches": [
+            {
+              "type": "price_list.remove",
+              "title": "FS-MK-X-Khuyến mãi shop AirChef"
+            },
+            {
+              "type": "price_list.state",
+              "title": "FS1111-MK Flash 20-22h",
+              "prices": [
+                {
+                  "price_set_id": "pset_01M5MY19EYE5QT755QM6CBZ41P",
+                  "amount": 1790000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5MY19EZ2VRVFJ0S4X5DH6Y5",
+                  "amount": 1790000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5MY1AW97K35C9XZDK34JBV9",
+                  "amount": 2690000,
+                  "currency_code": "vnd"
+                },
+                {
+                  "price_set_id": "pset_01M5N3D114TS96Q6T8SQRW5SWB",
+                  "amount": 1890000,
+                  "currency_code": "vnd"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "chosen_fix": null,
+      "authority": "ESCALATE",
+      "approvers": [
+        "merchandising",
+        "seller_ops"
+      ],
+      "covered_findings": [],
+      "covered_detail": []
+    },
+    "sample_id": "FLASH_DEARER_THAN_SHOP_PROMO-02"
+  }
+]

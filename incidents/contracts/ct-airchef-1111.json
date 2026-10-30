@@ -1,0 +1,45 @@
+{
+  "contract_id": "CT-AIRCHEF-1111",
+  "title": "11.11 AirChef 6L: flash sale + voucher shop + voucher sàn + freeship",
+  "market": { "currency": "vnd", "country": "vn" },
+  "teams": {
+    "merchandising": "Giá flash, SKU, biến thể",
+    "seller_ops": "Voucher shop, ngân sách shop",
+    "marketing": "Voucher sàn, phân khúc, trần giảm, chương trình freeship",
+    "logistics": "Provider, phí ship, vùng giao",
+    "finance": "Ngân sách sponsor, trần trợ giá mỗi đơn",
+    "category": "Ưu đãi riêng của ngành hàng"
+  },
+  "flash": {
+    "price_list_title": "FS1111 Flash sale AirChef 20-22h",
+    "price": 1790000,
+    "skus": ["FS-AIRCHEF-DEN", "FS-AIRCHEF-TRANG"],
+    "owner": "merchandising"
+  },
+  "vouchers": [
+    {
+      "code": "FS1111-SHOP100K", "owner": "seller_ops", "sponsor": "shop",
+      "type": "fixed", "value": 100000, "min_spend": 1500000, "min_spend_base": "item_subtotal", "segments": "ALL"
+    },
+    {
+      "code": "FS1111-SAN10", "owner": "marketing", "sponsor": "platform",
+      "type": "percentage", "value": 10, "cap": 150000, "min_spend": 1500000, "min_spend_base": "item_subtotal", "segments": "ALL"
+    }
+  ],
+  "freeship": {
+    "code": "FS1111-FREESHIP40K", "owner": "marketing", "support": 40000,
+    "threshold": 1600000, "threshold_base": "item_subtotal",
+    "providers_included": ["fs-ghn", "fs-ghtk"],
+    "providers_excluded": ["fs-ahamove", "fs-jt", "fs-vtp"]
+  },
+  "stacking": {
+    "allowed_codes": ["FS1111-SHOP100K", "FS1111-SAN10", "FS1111-FREESHIP40K"],
+    "max_item_discount_per_order": 250000
+  },
+  "budgets": [
+    { "campaign_identifier": "fs1111-shop", "owner": "finance", "min_limit": 50000000 },
+    { "campaign_identifier": "fs1111-san", "owner": "finance", "min_limit": 80000000 },
+    { "campaign_identifier": "fs1111-freeship", "owner": "finance", "min_limit": 20000000 }
+  ],
+  "hero_must_qualify": true
+}

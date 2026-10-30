@@ -1,0 +1,348 @@
+<title>FlashSRE Checkout 11.11</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Bố cục: điện thoại cố định bên trái, panel điều khiển cuộn bên phải; dưới 960px điện thoại toàn màn hình, panel thành ngăn kéo */
+:root {
+  --bg: #F3F5F8; --surface: #FFFFFF; --sunk: #F6F7FA; --ink: #141821; --ink-2: #485162; --ink-3: #737C8C; --line: #E2E6EC;
+  --accent: #0B7A63; --accent-ink: #FFFFFF; --accent-soft: #E3F4EF;
+  --good: #137A3D; --good-soft: #E5F5EA; --bad: #B4380B; --bad-soft: #FDEDE6; --warn: #9A5B00; --warn-soft: #FFF4DE;
+  --k-shop: #D9480F; --k-platform: #4C47D8; --k-brand_day: #9C1C9E; --k-freeship: #0A8A7A; --k-segment: #B86E00;
+  --flash: #D6336C;
+  --font: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --r: 12px; --shadow: 0 1px 2px rgb(20 24 33 / 6%), 0 8px 24px rgb(20 24 33 / 6%);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0D1015; --surface: #161A21; --sunk: #11151B; --ink: #E9ECF1; --ink-2: #AEB5C2; --ink-3: #848C9A; --line: #272D37;
+  --accent: #3CCBA8; --accent-ink: #062A21; --accent-soft: #10302A;
+  --good: #5BD08A; --good-soft: #12301F; --bad: #FF8A5C; --bad-soft: #3A1A10; --warn: #F5B547; --warn-soft: #33260E;
+  --k-shop: #FF8A4C; --k-platform: #8E8AFF; --k-brand_day: #E37BE5; --k-freeship: #45D1BE; --k-segment: #F2B24A; --flash: #FF6B9A;
+  --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 30%); color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #0D1015; --surface: #161A21; --sunk: #11151B; --ink: #E9ECF1; --ink-2: #AEB5C2; --ink-3: #848C9A; --line: #272D37;
+  --accent: #3CCBA8; --accent-ink: #062A21; --accent-soft: #10302A;
+  --good: #5BD08A; --good-soft: #12301F; --bad: #FF8A5C; --bad-soft: #3A1A10; --warn: #F5B547; --warn-soft: #33260E;
+  --k-shop: #FF8A4C; --k-platform: #8E8AFF; --k-brand_day: #E37BE5; --k-freeship: #45D1BE; --k-segment: #F2B24A; --flash: #FF6B9A;
+  --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 30%); color-scheme: dark;
+}
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--font); font-variant-numeric: tabular-nums; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface) }
+button, input, select { font: inherit; color: inherit }
+button { cursor: pointer }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0) }
+.muted { color: var(--ink-3) }
+.small { font-size: 12px }
+.good { color: var(--good); font-weight: 600 }
+.bad { color: var(--bad); font-weight: 600 }
+.num { text-align: right; white-space: nowrap }
+code, pre { font-family: var(--mono); font-size: 12px }
+
+/* thanh trên */
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; display: flex; align-items: center; gap: 12px; background: var(--surface); border-bottom: 1px solid var(--line);
+  padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.brand { font-weight: 800; letter-spacing: -.01em; font-size: 16px; white-space: nowrap }
+.brand span { color: var(--accent) }
+.top-meta { display: flex; gap: 10px; min-width: 0; color: var(--ink-2); font-size: 13px }
+#top-scenario { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+#top-clock { font-weight: 600; color: var(--ink); white-space: nowrap }
+.top-ctl { margin-left: auto; display: none }
+
+/* sân khấu */
+.stage { display: grid; grid-template-columns: 400px minmax(0, 1fr); gap: 24px; align-items: start; max-width: 1360px; margin: 0 auto;
+  padding-block: 20px 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.phone-wrap { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 64px) }
+.phone { width: 400px; max-width: 100%; height: min(860px, calc(100vh - 100px)); min-height: 560px; display: flex; flex-direction: column; background: var(--sunk);
+  border: 10px solid #1B1F27; border-radius: 44px; overflow: hidden; box-shadow: var(--shadow) }
+.statusbar { display: flex; justify-content: space-between; align-items: center; padding: 10px 24px 4px; font-weight: 700; font-size: 14px; background: var(--surface) }
+.sb-icons { color: var(--ink) }
+.appbar { display: flex; align-items: center; gap: 6px; padding: 6px 12px 10px; background: var(--surface); border-bottom: 1px solid var(--line) }
+.appbar h2 { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -.01em; flex: 1 }
+.icon-btn { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 10px; background: transparent; color: var(--ink) }
+.icon-btn:hover:not(:disabled) { background: var(--sunk) }
+.icon-btn:disabled { opacity: .35; cursor: default }
+.cart-btn { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 12px; font-weight: 600 }
+.cart-btn b { background: var(--accent); color: var(--accent-ink); border-radius: 999px; padding: 0 7px; margin-left: 4px }
+.screen-body { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; overscroll-behavior: contain }
+.screen-foot { background: var(--surface); border-top: 1px solid var(--line); padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px)) }
+.screen-foot.pay { display: flex; align-items: center; justify-content: space-between; gap: 12px }
+.screen-foot.pay > div { display: flex; flex-direction: column; line-height: 1.2 }
+.pay-total { font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -.01em }
+.saved { font-size: 12px; color: var(--good); font-weight: 600 }
+.foot-sum { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; color: var(--ink-2); margin-bottom: 10px; flex-wrap: wrap }
+.foot-sum b { color: var(--ink) }
+.foot-idle { flex-basis: 100%; color: var(--warn); font-weight: 600 }
+
+/* nút */
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 9px 14px; font-weight: 600; line-height: 1.2 }
+.btn:hover:not(:disabled) { border-color: var(--ink-3) }
+.btn:disabled { opacity: .5; cursor: not-allowed }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink) }
+.btn-primary:hover:not(:disabled) { filter: brightness(1.06); border-color: var(--accent) }
+.btn-ghost { background: transparent }
+.btn-danger { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, var(--line)) }
+.btn-sm { padding: 6px 10px; font-size: 13px; border-radius: 8px }
+.btn-block { width: 100%; padding-block: 13px; font-size: 15px; border-radius: 999px }
+.link { border: 0; background: none; padding: 0; color: var(--accent); font-weight: 600; display: inline-flex; align-items: center; gap: 2px }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
+
+/* thẻ cửa hàng */
+.card { background: var(--surface); border-radius: var(--r); padding: 12px; display: flex; flex-direction: column; gap: 8px }
+.card.empty { color: var(--ink-2) }
+.sec-title { font-weight: 700; font-size: 14px }
+.addr { flex-direction: row; align-items: center; gap: 10px; color: var(--ink-2) }
+.addr div { display: flex; flex-direction: column; font-size: 13px }
+.addr b { color: var(--ink) }
+.add-more { align-self: flex-start; padding: 0 4px }
+.shop-head { display: flex; align-items: center; gap: 6px; font-size: 13.5px }
+.line { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding-top: 8px; border-top: 1px solid var(--line) }
+.line-name { font-weight: 600; font-size: 13.5px }
+.line-price { display: flex; gap: 6px; align-items: baseline }
+.line-price b { font-size: 15px }
+.line-price s, .prod-price s { color: var(--ink-3); font-size: 12px }
+.line-src { margin-top: 2px }
+.line-notes { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; font-size: 12px }
+.ln-good { color: var(--good) }
+.ln-muted { color: var(--ink-3) }
+.src { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 999px; background: var(--sunk); color: var(--ink-2) }
+.src-flash { background: color-mix(in srgb, var(--flash) 14%, transparent); color: var(--flash) }
+.src-shop { background: color-mix(in srgb, var(--k-shop) 14%, transparent); color: var(--k-shop) }
+.qty { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 8px; overflow: hidden }
+.qty button { width: 32px; height: 32px; border: 0; background: var(--surface); font-size: 16px }
+.qty span { min-width: 26px; text-align: center; font-weight: 600 }
+.art { width: 56px; height: 56px; border-radius: 10px; background: var(--art-bg); color: var(--art-fg); display: grid; place-items: center; font-weight: 800; font-size: 17px; letter-spacing: -.02em }
+.prod-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px }
+.prod { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 10px; align-items: center; background: var(--surface); border-radius: var(--r); padding: 10px }
+.prod-name { font-weight: 600 }
+.prod-shop { font-size: 12px; color: var(--ink-3) }
+.prod-price { display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap }
+.countdown { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-radius: var(--r); padding: 10px 12px; background: color-mix(in srgb, var(--flash) 12%, var(--surface)); color: var(--flash); font-weight: 600 }
+.countdown b { font-family: var(--mono); font-size: 16px }
+.countdown.end { background: var(--warn-soft); color: var(--warn) }
+.ship-list { display: flex; flex-direction: column; gap: 6px }
+.ship-opt { display: grid; grid-template-columns: auto 1fr auto auto; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 9px 10px; cursor: pointer }
+.ship-opt.on { border-color: var(--accent); background: var(--accent-soft) }
+.ship-opt input { accent-color: var(--accent); margin: 0 }
+.ship-name { font-weight: 600 }
+.ship-tag { font-size: 11px; font-weight: 600 }
+.ship-tag.yes { color: var(--k-freeship) }
+.ship-tag.no { color: var(--ink-3) }
+.ship-fee { font-weight: 600 }
+.offers-entry { cursor: pointer }
+.oe-head { display: flex; justify-content: space-between; align-items: center }
+.oe-cta { color: var(--accent); font-weight: 600; display: inline-flex; align-items: center; gap: 2px; font-size: 13px }
+.chips { display: flex; flex-wrap: wrap; gap: 6px }
+.chip { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--sunk); color: var(--ink-2) }
+.chip[class*="k-"] { color: var(--kc); background: color-mix(in srgb, var(--kc) 12%, transparent) }
+.k-shop { --kc: var(--k-shop) } .k-platform { --kc: var(--k-platform) } .k-brand_day { --kc: var(--k-brand_day) } .k-freeship { --kc: var(--k-freeship) } .k-segment { --kc: var(--k-segment) }
+.lost { display: flex; gap: 8px; align-items: flex-start; background: var(--warn-soft); color: var(--ink); border-radius: 10px; padding: 8px 10px; font-size: 12.5px }
+.lost div { display: flex; flex-direction: column }
+.lost span { color: var(--ink-2) }
+.i-warn { color: var(--warn); flex: none; margin-top: 1px }
+.bill-row { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; color: var(--ink-2) }
+.bill-row b { color: var(--ink); font-weight: 600 }
+.bill-row.neg b { color: var(--good) }
+.bill-row.total { border-top: 1px dashed var(--line); padding-top: 8px; font-size: 15px; color: var(--ink); font-weight: 700 }
+.bill-row.total b { font-size: 18px; font-weight: 800 }
+.why summary { cursor: pointer; color: var(--accent); font-weight: 600; font-size: 13px }
+.why-body { display: flex; flex-direction: column; gap: 8px; padding-top: 8px; font-size: 12.5px }
+.why-sets { display: grid; gap: 6px }
+.why-sets > div { display: flex; flex-wrap: wrap; gap: 4px; align-items: center }
+.lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); margin-right: 4px }
+.why-prices { margin: 0; padding-left: 16px; display: flex; flex-direction: column; gap: 4px }
+.win { color: var(--ink); font-weight: 600 }
+.tbl-wrap { overflow-x: auto; max-width: 100% }
+table { border-collapse: collapse; width: 100% }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top }
+th { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-3); font-weight: 700 }
+.trace td { font-size: 12px }
+.trace tr.fail td { color: var(--ink-3) }
+
+/* màn ưu đãi */
+.offers-body { padding: 0; gap: 0; background: var(--surface) }
+.code-row { display: flex; gap: 8px; padding: 12px; position: sticky; top: 0; background: var(--surface); z-index: 1; border-bottom: 1px solid var(--line) }
+.code-row input { flex: 1; min-width: 0; border: 1px solid var(--line); background: var(--sunk); border-radius: 10px; padding: 9px 12px }
+.code-msg { margin: 8px 12px 0; font-size: 12.5px; color: var(--ink-2) }
+.offer-list { list-style: none; margin: 0; padding: 0 }
+.offer { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 12px; padding: 14px 14px; border-bottom: 1px solid var(--line); align-items: start }
+.ticket { width: 52px; height: 52px; border-radius: 12px; background: var(--kc); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 12px; letter-spacing: .02em; position: relative }
+.ticket::after { content: ""; position: absolute; right: -5px; top: 50%; width: 10px; height: 10px; margin-top: -5px; border-radius: 50%; background: var(--surface) }
+.o-title { font-weight: 700; font-size: 15px }
+.o-cond { font-size: 12.5px; color: var(--ink-2) }
+.o-time { font-size: 12px; color: var(--ink-3) }
+.o-state { margin-top: 4px; font-size: 12.5px }
+.o-ok { color: var(--good); font-weight: 600 }
+.o-ok.soft { color: var(--ink-2); font-weight: 500 }
+.o-lost { color: var(--warn); font-weight: 600; display: inline-flex; gap: 4px; align-items: flex-start }
+.o-why { color: var(--ink) }
+.o-why em { font-style: normal; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-3); margin-right: 4px }
+.o-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; font-size: 12.5px }
+.o-details { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; margin: 8px 0 0; font-size: 12px; background: var(--sunk); border-radius: 8px; padding: 8px 10px }
+.o-details dt { color: var(--ink-3) }
+.o-details dd { margin: 0 }
+.o-box { padding-top: 4px }
+.ck { width: 22px; height: 22px; accent-color: var(--accent); margin: 0; cursor: pointer }
+.ck:disabled { cursor: not-allowed }
+.auto-pill { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent) }
+.offer.st-blocked .ticket { background: color-mix(in srgb, var(--kc) 35%, var(--line)) }
+.offer.st-blocked .o-title, .offer.st-blocked .o-cond, .offer.st-blocked .o-time { color: var(--ink-3) }
+.offer.st-applied { background: color-mix(in srgb, var(--accent) 5%, transparent) }
+.offer.st-selected_not_applied { background: var(--warn-soft) }
+
+/* panel bên phải */
+.side { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); min-width: 0 }
+.side-head { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); padding: 8px 12px 0; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 53px); background: var(--surface); z-index: 5; border-radius: 16px 16px 0 0 }
+.tabs { display: flex; gap: 4px; overflow-x: auto; flex: 1 }
+.tab { border: 0; background: none; padding: 10px 12px; font-weight: 600; color: var(--ink-3); border-bottom: 2px solid transparent; white-space: nowrap }
+.tab.on { color: var(--ink); border-bottom-color: var(--accent) }
+.drawer-close { display: none }
+.l-short { display: none }
+.side-body { padding: 4px 16px 20px }
+.panel-sec { padding: 14px 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px }
+.panel-sec:last-child { border-bottom: 0 }
+.panel-sec h4 { margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2) }
+.panel-sec h4 .muted { text-transform: none; letter-spacing: 0; font-weight: 500 }
+.panel-sec h5 { margin: 6px 0 0; font-size: 13px }
+.sc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px }
+.sc { border: 1px solid var(--line); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 6px; min-width: 0 }
+.sc.on { border-color: var(--accent); background: var(--accent-soft) }
+.sc-head { display: flex; gap: 8px; align-items: flex-start }
+.sc-head h3 { margin: 0; font-size: 14px; line-height: 1.3; text-wrap: balance }
+.sc-id { flex: none; width: 24px; height: 24px; border-radius: 7px; background: var(--ink); color: var(--surface); display: grid; place-items: center; font-weight: 800; font-size: 12px }
+.sc-obs { margin: 0; color: var(--ink) }
+.sc-obs.small { color: var(--ink-2); font-size: 12.5px }
+.sc-camps { margin: 0; font-size: 12px; color: var(--ink-2); font-family: var(--mono) }
+.sc-teams { display: flex; flex-wrap: wrap; gap: 4px }
+.sc-btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px }
+.team { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--sunk); color: var(--ink-2); white-space: nowrap }
+.clock-face { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap }
+.clock-face b { font-family: var(--mono); font-size: 34px; font-weight: 500; letter-spacing: -.02em }
+.run { font-size: 12px; font-weight: 700; color: var(--ink-3) }
+.run.on { color: var(--good) }
+.inline { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--ink-2) }
+.inline input, .inline select, .f input, .f select, .create select { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 8px; min-width: 0 }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 3px; align-self: flex-start; flex-wrap: wrap }
+.seg button { border: 0; background: none; border-radius: 7px; padding: 6px 12px; font-weight: 600; color: var(--ink-2) }
+.seg button.on { background: var(--ink); color: var(--surface) }
+.toggle { display: flex; gap: 8px; align-items: center; cursor: pointer }
+.toggle input { width: 18px; height: 18px; accent-color: var(--accent) }
+.base-meta { display: flex; flex-direction: column; font-size: 13px }
+.base-meta span { color: var(--ink-2) }
+.warn-box, .note-box { display: flex; gap: 8px; border-radius: 10px; padding: 8px 10px; font-size: 13px }
+.warn-box { background: var(--warn-soft) }
+.note-box { background: var(--sunk); color: var(--ink-2) }
+.cmp td { font-size: 13px }
+.cmp tr.tot td { font-weight: 800; font-size: 14px }
+.delta { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-size: 15px; padding: 10px 12px; border-radius: 10px; background: var(--sunk) }
+.delta b { font-size: 22px; font-weight: 800 }
+.delta.up { background: var(--bad-soft); color: var(--bad) }
+.delta.down { background: var(--good-soft); color: var(--good) }
+.delta-lbl { font-weight: 700 }
+.det-note { margin: 12px 0 0; font-size: 12px; color: var(--ink-3) }
+.verdict { margin: 10px 0 4px; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; background: var(--sunk); border-left: 0 }
+.verdict b { font-size: 16px }
+.verdict-num { font-weight: 700; font-family: var(--mono); font-size: 13px }
+.v-BUSINESS_IMPACT, .v-INPUT_CHANGED { background: var(--warn-soft) }
+.v-CONTRACT_VIOLATION { background: var(--bad-soft) }
+.v-NO_ISSUE { background: var(--good-soft) }
+.bullets { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px }
+.repro { margin: 0; background: var(--sunk); border-radius: 8px; padding: 10px; overflow-x: auto; white-space: pre }
+.contracts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px }
+.contracts li { display: flex; gap: 8px; align-items: baseline }
+.contracts li span { font-size: 11px; font-weight: 800; text-transform: uppercase; padding: 1px 6px; border-radius: 6px }
+.contracts .ok span { background: var(--good-soft); color: var(--good) }
+.contracts .bad span { background: var(--bad-soft); color: var(--bad) }
+.opts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px }
+.opt { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start }
+.opt.on { border-color: var(--accent) }
+.opt p { margin: 0; font-size: 13px }
+.opt-head { display: flex; gap: 8px; align-items: center; flex-wrap: wrap }
+.fix { display: flex; flex-direction: column; gap: 6px; width: 100% }
+.empty-state p { margin: 0 }
+
+/* admin */
+.subtabs { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; padding-top: 12px }
+.subtabs button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-weight: 600; font-size: 13px; color: var(--ink-2) }
+.subtabs button.on { background: var(--ink); color: var(--surface); border-color: var(--ink) }
+.ver { margin-left: auto; font-size: 12px }
+.create { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 13px }
+.admin td { font-size: 13px; vertical-align: middle }
+.admin tr.sel > td { background: var(--accent-soft) }
+.form-row > td { background: var(--sunk) }
+.state { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap }
+.s-active { background: var(--good-soft); color: var(--good) }
+.s-paused { background: var(--sunk); color: var(--ink-3); border: 1px solid var(--line) }
+.s-not_started { background: var(--warn-soft); color: var(--warn) }
+.s-expired { background: var(--bad-soft); color: var(--bad) }
+.switch { position: relative; display: inline-block; width: 36px; height: 20px }
+.switch input { opacity: 0; width: 100%; height: 100%; position: absolute; margin: 0; cursor: pointer }
+.switch span { position: absolute; inset: 0; background: var(--line); border-radius: 999px; pointer-events: none; transition: background .15s }
+.switch span::after { content: ""; position: absolute; left: 2px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); transition: transform .15s }
+.switch input:checked + span { background: var(--accent) }
+.switch input:checked + span::after { transform: translateX(16px) }
+.switch input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px }
+.form { display: flex; flex-direction: column; gap: 10px; padding: 6px 2px }
+.f-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px }
+.f { display: flex; flex-direction: column; gap: 3px; font-size: 12.5px; min-width: 0; border: 0; padding: 0; margin: 0 }
+.f label, .f legend { color: var(--ink-2); font-weight: 600; padding: 0 }
+.f small { color: var(--ink-3) }
+.f input[type="checkbox"] { align-self: flex-start; width: 18px; height: 18px; accent-color: var(--accent) }
+.checks { display: flex; flex-wrap: wrap; gap: 6px 14px; padding-top: 3px }
+.checks label { display: inline-flex; gap: 5px; align-items: center; font-weight: 500; color: var(--ink) }
+.checks input { accent-color: var(--accent) }
+.matrix th, .matrix td { text-align: center; font-size: 12px; white-space: nowrap }
+.matrix tbody th { text-align: left; text-transform: none; letter-spacing: 0; color: var(--ink); font-size: 12.5px }
+.matrix .diag { color: var(--ink-3) }
+.pair { border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; font-size: 12px; font-weight: 600; display: inline-flex; flex-direction: column; line-height: 1.2 }
+.pair.allow { background: var(--good-soft); color: var(--good); border-color: transparent }
+.pair.deny { background: var(--bad-soft); color: var(--bad); border-color: transparent }
+.pair small { font-weight: 500; font-size: 10px }
+.order-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px }
+.order-list li { display: grid; grid-template-columns: 40px auto minmax(0, 1fr) auto; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px }
+.ord { font-family: var(--mono); color: var(--ink-3) }
+.ord-btns { display: flex; gap: 2px }
+.diff td { font-size: 12.5px }
+
+/* toast, nổi số */
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 60; background: var(--ink); color: var(--surface); padding: 10px 16px; border-radius: 12px; font-weight: 600; box-shadow: var(--shadow); max-width: calc(100vw - 32px) }
+.bump { animation: bump .7s ease-out }
+@keyframes bump { 0% { background: color-mix(in srgb, var(--warn) 35%, transparent); border-radius: 4px } 100% { background: transparent } }
+@media (prefers-reduced-motion: reduce) { .bump { animation: none } .switch span, .switch span::after { transition: none } }
+
+/* điện thoại thật / màn hẹp */
+@media (max-width: 960px) {
+  .stage { grid-template-columns: minmax(0, 1fr); padding: 0; gap: 0 }
+  .phone-wrap { position: static }
+  .phone { width: 100%; height: calc(100dvh - 53px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); min-height: 0; border: 0; border-radius: 0; box-shadow: none }
+  .statusbar { display: none }
+  .appbar { padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)) }
+  .screen-body { padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)) }
+  .top-ctl { display: inline-flex }
+  .top-meta #top-scenario { display: none }
+  .side { position: fixed; inset: 0; z-index: 50; border-radius: 0; overflow-y: auto; display: none; padding-bottom: env(safe-area-inset-bottom, 0px) }
+  body.drawer-open .side { display: block }
+  body.drawer-open { overflow: hidden }
+  .side-head { top: 0; border-radius: 0; padding-top: calc(8px + env(safe-area-inset-top, 0px)); padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)) }
+  .side-body { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+  .drawer-close { display: inline-grid }
+  .l-long { display: none }
+  .l-short { display: inline }
+}
+</style>
+
+<header class="topbar">
+  <div class="brand">Flash<span>SRE</span></div>
+  <div class="top-meta"><span id="top-scenario"></span><span id="top-clock"></span></div>
+  <button class="btn btn-sm top-ctl" data-act="drawer">Điều khiển demo</button>
+</header>
+<main class="stage">
+  <section class="phone-wrap" aria-label="Cửa hàng demo"><div class="phone" id="phone"></div></section>
+  <aside class="side" id="side" aria-label="Điều khiển demo"></aside>
+</main>
+<div class="toast" id="toast" role="status" hidden></div>
+<script type="module" src="app.mjs"></script>

@@ -1,0 +1,27 @@
+{
+  "name": "FlashSRE Commerce (Medusa v2)",
+  "description": "Medusa v2 backend + admin for FlashSRE self-healing promotion operations",
+  "stack": "heroku-24",
+  "buildpacks": [
+    { "url": "heroku/nodejs" }
+  ],
+  "formation": {
+    "web": { "quantity": 1, "size": "basic" },
+    "release": { "quantity": 1, "size": "basic" }
+  },
+  "addons": [
+    { "plan": "heroku-postgresql:essential-0" }
+  ],
+  "env": {
+    "MEDUSA_WORKER_MODE": { "value": "server" },
+    "DISABLE_MEDUSA_ADMIN": { "value": "false" },
+    "JWT_SECRET": { "generator": "secret" },
+    "COOKIE_SECRET": { "generator": "secret" },
+    "MEDUSA_BACKEND_URL": { "value": "https://CHANGE-ME.herokuapp.com" },
+    "STORE_CORS": { "value": "http://localhost:8000" },
+    "ADMIN_CORS": { "value": "https://CHANGE-ME.herokuapp.com" },
+    "AUTH_CORS": { "value": "https://CHANGE-ME.herokuapp.com,http://localhost:8000" },
+    "NODE_ENV": { "value": "production" },
+    "NODE_OPTIONS": { "value": "--max-old-space-size=460" }
+  }
+}

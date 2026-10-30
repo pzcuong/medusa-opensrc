@@ -1,0 +1,203 @@
+<title>FlashSRE Ops 11.11</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Bố cục: bảng vận hành chiến dịch bên trái, phòng điều tra FlashSRE bên phải; dưới 1080px xếp thành một cột */
+:root {
+  --bg: #F3F5F8; --surface: #FFFFFF; --sunk: #F6F7FA; --ink: #141821; --ink-2: #485162; --ink-3: #737C8C; --line: #E2E6EC;
+  --accent: #0B7A63; --accent-ink: #FFFFFF; --accent-soft: #E3F4EF;
+  --good: #137A3D; --good-soft: #E5F5EA; --bad: #B4380B; --bad-soft: #FDEDE6; --warn: #9A5B00; --warn-soft: #FFF4DE;
+  --plan: #8A93A3; --actual: #0B7A63; --fore: #B4380B;
+  --font: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --shadow: 0 1px 2px rgb(20 24 33 / 6%), 0 8px 24px rgb(20 24 33 / 6%);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0D1015; --surface: #161A21; --sunk: #11151B; --ink: #E9ECF1; --ink-2: #AEB5C2; --ink-3: #848C9A; --line: #272D37;
+  --accent: #3CCBA8; --accent-ink: #062A21; --accent-soft: #10302A;
+  --good: #5BD08A; --good-soft: #12301F; --bad: #FF8A5C; --bad-soft: #3A1A10; --warn: #F5B547; --warn-soft: #33260E;
+  --plan: #6B7483; --actual: #3CCBA8; --fore: #FF8A5C;
+  --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 30%); color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #0D1015; --surface: #161A21; --sunk: #11151B; --ink: #E9ECF1; --ink-2: #AEB5C2; --ink-3: #848C9A; --line: #272D37;
+  --accent: #3CCBA8; --accent-ink: #062A21; --accent-soft: #10302A;
+  --good: #5BD08A; --good-soft: #12301F; --bad: #FF8A5C; --bad-soft: #3A1A10; --warn: #F5B547; --warn-soft: #33260E;
+  --plan: #6B7483; --actual: #3CCBA8; --fore: #FF8A5C;
+  --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 30%); color-scheme: dark;
+}
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 14px/1.5 var(--font); font-variant-numeric: tabular-nums }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface) }
+button, input, select { font: inherit; color: inherit }
+button { cursor: pointer }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+h1, h2, h3 { margin: 0; text-wrap: balance }
+p { margin: 0 }
+.muted { color: var(--ink-3) }
+.small { font-size: 12px }
+.mono { font-family: var(--mono); font-size: 12px }
+.good { color: var(--good); font-weight: 600 }
+.bad { color: var(--bad); font-weight: 600 }
+
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding-block: 10px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.brand { font-weight: 800; font-size: 16px; letter-spacing: -.01em; white-space: nowrap }
+.brand span { color: var(--accent) }
+.tabs { display: flex; gap: 4px; background: var(--sunk); border: 1px solid var(--line); border-radius: 10px; padding: 3px; min-width: 0; overflow-x: auto }
+.tab { border: 0; background: none; padding: 6px 12px; border-radius: 7px; font-size: 13px; font-weight: 600; color: var(--ink-2); white-space: nowrap }
+.tab[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow) }
+.player { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-wrap: wrap }
+.clock { font-weight: 700; font-size: 18px; min-width: 56px; text-align: right }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 9px; padding: 7px 12px; font-weight: 600; font-size: 13px; white-space: nowrap }
+.btn:hover { border-color: var(--ink-3) }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink) }
+.btn[disabled] { opacity: .5; cursor: default }
+select.btn { padding-right: 8px }
+#scrub { width: 160px; accent-color: var(--accent) }
+
+.stage { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 20px; max-width: 1440px; margin: 0 auto; align-items: start;
+  padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+@media (max-width: 1080px) { .stage { grid-template-columns: minmax(0, 1fr) } #scrub { width: 120px } }
+.col { display: flex; flex-direction: column; gap: 16px; min-width: 0 }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0 }
+.panel h2 { font-size: 15px; font-weight: 700 }
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3) }
+.lede { color: var(--ink-2); max-width: 70ch }
+.chips { display: flex; flex-wrap: wrap; gap: 6px }
+.chip { font-size: 12px; padding: 3px 9px; border-radius: 999px; background: var(--sunk); border: 1px solid var(--line); color: var(--ink-2) }
+.chip b { color: var(--ink); font-weight: 600 }
+.event { display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 10px; background: var(--sunk); border: 1px dashed var(--line); font-size: 13px }
+.event input { accent-color: var(--accent); width: 18px; height: 18px; margin: 0 }
+
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px }
+@media (max-width: 640px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+.kpi { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0 }
+.kpi .k { font-size: 12px; color: var(--ink-3) }
+.kpi .v { font-size: 20px; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.kpi .d { font-size: 12px; color: var(--ink-2) }
+.kpi.alert { border-color: color-mix(in srgb, var(--bad) 45%, var(--line)); background: var(--bad-soft) }
+
+.chart { width: 100%; height: auto; display: block }
+.chart text { fill: var(--ink-3); font: 11px var(--font) }
+.chart .grid { stroke: var(--line); stroke-width: 1 }
+.chart .plan { stroke: var(--plan); stroke-width: 2; stroke-dasharray: 5 4; fill: none }
+.chart .act { stroke: var(--actual); stroke-width: 2.5; fill: none }
+.chart .area { fill: color-mix(in srgb, var(--actual) 14%, transparent) }
+.chart .fore { stroke: var(--fore); stroke-width: 2; stroke-dasharray: 2 4; fill: none }
+.chart .target { stroke: var(--warn); stroke-width: 1.5; stroke-dasharray: 8 4; fill: none }
+.chart .now { stroke: var(--ink-2); stroke-width: 1 }
+.chart .mark { stroke: var(--bad); stroke-width: 1 }
+.chart .mark-t { fill: var(--bad); font-weight: 600 }
+.chart .dot { fill: var(--actual) }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--ink-2) }
+.legend i { display: inline-block; width: 18px; height: 0; border-top: 2.5px solid var(--actual); vertical-align: middle; margin-right: 6px }
+.legend i.plan { border-top: 2px dashed var(--plan) }
+.legend i.fore { border-top: 2px dotted var(--fore) }
+.legend i.target { border-top: 2px dashed var(--warn) }
+
+.tbl-wrap { overflow-x: auto }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px }
+th { text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap }
+td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top }
+td.n, th.n { text-align: right; white-space: nowrap }
+tr.hot td { background: var(--bad-soft) }
+
+.status { display: flex; align-items: center; gap: 10px; flex-wrap: wrap }
+.pill { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--sunk); color: var(--ink-2); border: 1px solid var(--line) }
+.pill.ok { background: var(--good-soft); color: var(--good); border-color: transparent }
+.pill.bad { background: var(--bad-soft); color: var(--bad); border-color: transparent }
+.pill.warn { background: var(--warn-soft); color: var(--warn); border-color: transparent }
+.slo { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 10px 12px; border-radius: 10px; background: var(--sunk); font-size: 13px }
+.slo b { white-space: nowrap }
+
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column }
+.step { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 10px; padding: 10px 0; border-top: 1px solid var(--line) }
+.step:first-child { border-top: 0 }
+.step .when { font-weight: 600; font-size: 12px; color: var(--ink-3); padding-top: 1px }
+.step .sys { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3) }
+.step .q { color: var(--ink-2); font-size: 13px }
+.step .a { font-size: 13.5px }
+.verdict { font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px; margin-left: 6px; letter-spacing: .02em }
+.v-clear { background: var(--good-soft); color: var(--good) }
+.v-bad, .v-cause { background: var(--bad-soft); color: var(--bad) }
+.v-info { background: var(--sunk); color: var(--ink-2); border: 1px solid var(--line) }
+.step.pending .a { color: var(--ink-3) }
+.cause { padding: 12px 14px; border-radius: 10px; background: var(--warn-soft); color: var(--ink); font-size: 13.5px }
+.cause b { color: var(--warn) }
+.note { font-size: 12px; color: var(--ink-3) }
+
+.opts { display: flex; flex-direction: column; gap: 10px }
+.opt { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px }
+.opt.rec { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset }
+.opt.chosen { background: var(--accent-soft) }
+.opt-head { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start }
+.opt-head b { font-size: 13.5px }
+.tag { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap }
+.tag.rec { background: var(--accent); color: var(--accent-ink) }
+.tag.ok { background: var(--good-soft); color: var(--good) }
+.tag.no { background: var(--bad-soft); color: var(--bad) }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 6px 12px; font-size: 12.5px }
+.facts span { display: block; color: var(--ink-3); font-size: 11.5px }
+.approve { display: flex; flex-wrap: wrap; gap: 6px; align-items: center }
+.signed { font-size: 12px; color: var(--good); font-weight: 600 }
+
+.result { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px }
+@media (max-width: 640px) { .result { grid-template-columns: minmax(0, 1fr) } }
+.result .kpi .v { font-size: 18px }
+.empty { color: var(--ink-3); font-size: 13px; padding: 6px 0 }
+.livebar { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--good) }
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--good) }
+a.chip { text-decoration: none; color: var(--ink) }
+.learn { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start }
+@media (max-width: 1080px) { .learn { grid-template-columns: minmax(0, 1fr) } }
+.lesson { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px }
+.ev { margin: 0; padding-left: 18px; font-size: 13px; display: flex; flex-direction: column; gap: 4px }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap }
+.bench { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px }
+.bm { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; min-width: 0 }
+.bm-breach { border-color: color-mix(in srgb, var(--bad) 50%, var(--line)); background: var(--bad-soft) }
+.bm-warn { border-color: color-mix(in srgb, var(--warn) 50%, var(--line)) }
+.bm-head { display: flex; justify-content: space-between; gap: 6px; align-items: flex-start }
+.bm-label { font-size: 12px; color: var(--ink-2); font-weight: 600 }
+.bm-val { display: flex; justify-content: space-between; align-items: center; gap: 6px }
+.bm-val b { font-size: 18px }
+.bm-foot, .bm-src { font-size: 11px; color: var(--ink-3) }
+.tag.trig { background: var(--accent-soft); color: var(--accent) }
+.spark { width: 100%; height: 46px; display: block }
+.spark .sp-line { fill: none; stroke: var(--ink); stroke-width: 1.6 }
+.spark .sp-warn { stroke: var(--warn); stroke-width: 1; stroke-dasharray: 4 3 }
+.spark .sp-breach { stroke: var(--bad); stroke-width: 1; stroke-dasharray: 2 2 }
+.spark .sp-hot { fill: color-mix(in srgb, var(--bad) 16%, transparent) }
+.spark .sp-fire { fill: var(--bad) }
+.spark .sp-now { stroke: var(--ink-3); stroke-width: 1 }
+@media (prefers-reduced-motion: no-preference) { .step.fresh { animation: rise .35s ease-out } @keyframes rise { from { opacity: .3; transform: translateY(4px) } to { opacity: 1; transform: none } } }
+</style>
+
+<header class="topbar">
+  <div class="brand">Flash<span>SRE</span> Ops</div>
+  <div class="tabs" id="tabs" role="group" aria-label="Kịch bản"></div>
+  <div class="player">
+    <span class="livebar" id="livebar" hidden></span>
+    <span class="clock" id="clock">20:00</span>
+    <input type="range" id="scrub" min="0" max="239" value="0" aria-label="Thời điểm trong khung 20:00–24:00">
+    <button class="btn btn-primary" id="play">Chạy</button>
+    <select class="btn" id="speed" aria-label="Tốc độ">
+      <option value="400">1 phút / 0,4s</option>
+      <option value="150" selected>1 phút / 0,15s</option>
+      <option value="50">1 phút / 0,05s</option>
+    </select>
+    <button class="btn" id="reset">Làm lại</button>
+  </div>
+</header>
+
+<main class="stage">
+  <section class="col" id="ops" aria-label="Bảng vận hành chiến dịch"></section>
+  <section class="col" id="sre" aria-label="FlashSRE"></section>
+  <section class="learn" id="learn" aria-label="Kinh nghiệm và kiểm tra voucher mới"></section>
+</main>
+
+<script type="module" src="./app.mjs"></script>
